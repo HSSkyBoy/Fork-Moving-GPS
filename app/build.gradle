@@ -58,11 +58,6 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-        foss {
-            dimension "version"
-            // versionNameSuffix "-foss"
-            isDefault true
-        }
         full {
             dimension "version"
             versionNameSuffix "-full"
@@ -78,15 +73,9 @@ secrets {
 }
 
 dependencies {
-
-    // temporary foss xposed fix from https://github.com/deltazefiro/Amarok-Hider/issues/160
     // compileOnly 'de.robv.android.xposed:api:82'
     compileOnly 'com.github.deltazefiro:XposedBridge:main-SNAPSHOT'
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
-
-    // use microg (apache 2.0) and maplibre (bsd 2-clause)
-    fossImplementation 'org.microg.gms:play-services-location:0.3.6.244735'
-    fossImplementation ('org.maplibre.gl:android-sdk:11.8.2')
     /* {
         exclude group: 'com.google.android.gms'
     } */
