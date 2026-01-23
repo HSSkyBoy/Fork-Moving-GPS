@@ -32,21 +32,6 @@ android {
         includeInApk = false
         includeInBundle = false
     }
-    
-    */
-    signingConfigs {
-       release {
-           def keystorePropertiesFile = rootProject.file("local.properties")
-           def keystoreProperties = new Properties()
-           keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-           keyAlias keystoreProperties['KEY_ALIAS']
-           keyPassword keystoreProperties['KEY_PASSWORD']
-           storeFile file(keystoreProperties['KEYSTORE_PATH'])
-           storePassword keystoreProperties['KEYSTORE_PASSWORD']
-       }
-    }
-    */
 
     buildTypes {
         release {
@@ -84,7 +69,12 @@ android {
         }
     }
 
-    namespace 'io.github.mwarevn.movingsimulation'
+    namespace 'io.github.hsskyboy.forkmovinggps'
+}
+
+secrets {
+    defaultPropertiesFileName = "secrets.defaults.properties" 
+    ignoreList.add("keyToIgnore") 
 }
 
 dependencies {
