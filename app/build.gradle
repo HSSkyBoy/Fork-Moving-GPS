@@ -7,12 +7,12 @@ plugins {
     id 'com.google.devtools.ksp'
 }
 
-def tagName = '0.0.8'
+def tagName = System.getenv("version") ?: "0.0.8"
 
 android {
     compileSdk 34
     defaultConfig {
-        applicationId "io.github.mwarevn.movingsimulation"
+        applicationId "io.github.hsskyboy.forkmovinggps"
         minSdk 27
         targetSdk 34
         versionCode 8
@@ -32,7 +32,8 @@ android {
         includeInApk = false
         includeInBundle = false
     }
-
+    
+    */
     signingConfigs {
        release {
            def keystorePropertiesFile = rootProject.file("local.properties")
@@ -45,13 +46,14 @@ android {
            storePassword keystoreProperties['KEYSTORE_PASSWORD']
        }
     }
+    */
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
         debug {
             minifyEnabled false

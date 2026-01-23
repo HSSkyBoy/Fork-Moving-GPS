@@ -1,155 +1,103 @@
-# https://github.com/marketplace/actions/automated-build-android-app-with-github-action
-# https://github.com/marketplace/actions/publish-release
-
-name: Generate APK
+name: Build APK
 
 env:
-    main_project_module: app
-    target_owner: Xposed-Modules-Repo
-    target_repo: io.github.mwarevn.movingsimulation
-    target_path: target_path
+    # main_project_module: app
+    # target_owner: Xposed-Modules-Repo
+    # target_repo: io.github.hsskyboy.forkmovinggps
+    # target_path: target_path
+  main_project_module: app
+  apk_path_full: app/build/outputs/apk/full/release/app-full-arm64-v8a-release.apk
 
 on:
-    push:
-        branches:
-            - "release/**"
-        tags:
-            - "v*.*.*"
-    workflow_dispatch:
-        inputs:
-            version:
-                description: "v*.*.*"
-                required: true
-                type: string
-    # schedule:
-    #   - cron: '0 0 1 */2 *'
+  push:
+    branches:
+      - "full"    # 監聽 full 分支的 push
+    tags:
+      - "v*"      # 保留打 Tag 時觸發正式發布
+  workflow_dispatch: # 保留手動觸發
+    inputs:
+      version:
+        description: "Manual Version Override"
+        required: false
+        type: string
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Set TAG
-              if: github.event_name == 'push'
-              run: |
-                  echo "version=$(echo '${{ github.ref_name }}' | awk -F 'v' '{print $2}')" >> $GITHUB_ENV
+      # 1. 設置 Java 環境
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
 
-            - name: Set TAG
-              if: github.event_name == 'workflow_dispatch'
-              run: |
-                  echo "version=$(echo '${{ inputs.version }}' | awk -F 'v' '{print $2}')" >> $GITHUB_ENV
+      # 2. 給予 Gradlew 執行權限
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-            - name: Set ENV
-              run: |
-                  echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV;
-                  echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+      # 3. 執行構建
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease --stacktrace
 
-            - name: Use JDK
-              uses: actions/setup-java@v4
-              with:
-                  distribution: "zulu"
-                  java-version: "17" # 21
-                  cache: "gradle"
+      # 4. 上傳構建產物
+      - name: Upload APK Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-${{ github.sha }}
+          path: |
+            ${{ env.apk_path_foss }}
+            ${{ env.apk_path_full }}
+          retention-days: 30
 
-            - name: Build
-              run: |
-                  echo ${{ secrets.STORE }} | base64 -d > upload.jks
-                  echo ${{ secrets.LOCAL }} | base64 -d > local.properties
-                  chmod +x ./gradlew;
-                  ./gradlew assembleRelease --stacktrace
-                  rm upload.jks local.properties
+      # ------------------------------------------------------------------
+      # 以下步驟僅在 "打 Tag" (v*) 時執行，避免每次 Push 都發布 Release
+      # ------------------------------------------------------------------
 
-            # - name: Upload
-            #   uses: actions/upload-artifact@v4
-            #   with:
-            #     name: ${{ env.repository_name }} - ${{ env.date_today }}
-            #     path: ${{ env.main_project_module }}/build/outputs/apk/
+      - name: Determine Release Version
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-            - name: Publish (GitHub)
-              uses: softprops/action-gh-release@v2
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  name: v${{ env.version }}
-                  tag_name: v${{ env.version }}
-                  files: |
-                      ${{ env.main_project_module }}/build/outputs/apk/foss/release/app-foss-arm64-v8a-release.apk
-                      ${{ env.main_project_module }}/build/outputs/apk/full/release/app-full-arm64-v8a-release.apk
+      - name: Publish to GitHub Releases
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            ${{ env.apk_path_foss }}
+            ${{ env.apk_path_full }}
+          name: ${{ steps.get_version.outputs.VERSION }}
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
 
-            - name: Publish (Xposed)
-              uses: softprops/action-gh-release@v2
-              with:
-                  token: ${{ secrets.PAT }}
-                  repository: Xposed-Modules-Repo/io.github.mwarevn.movingsimulation
-                  name: v${{ env.version }}
-                  tag_name: v${{ env.version }}
-                  files: |
-                      ${{ env.main_project_module }}/build/outputs/apk/foss/release/app-foss-arm64-v8a-release.apk
-                      ${{ env.main_project_module }}/build/outputs/apk/full/release/app-full-arm64-v8a-release.apk
-
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                  repository: ${{ env.target_owner }}/${{ env.target_repo }}
-                  path: ${{ env.target_path }}
-                  token: ${{ secrets.PAT }}
-                  # sparse-checkout: |
-                  #     README.md
-                  # sparse-checkout-cone-mode: false
-
-            - name: Sync
-              run: |
-                  cd ${{ env.target_path }}
-                  cp ../README.md ../LICENSE .
-                  git config --global user.name 'github-actions[bot]'
-                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-                  git add README.md
-                  git add LICENSE
-                  git commit --amend --no-edit
-                  git push --force
-
-            # - name: Get latest release
-            #   id: get_release
-            #   uses: actions/github-script@v6
-            #   with:
-            #     script: |
-            #       const latestRelease = await github.repos.getLatestRelease({
-            #       owner: ${{ env.owner }},
-            #       repo: ${{ env.repo }}
-            #       });
-            #       return latestRelease.data;
-
-            # - name: Download release assets
-            #   run: |
-            #     mkdir -p release-assets
-            #     for asset in $(jq -r '.assets[].browser_download_url' <<< "${{ steps.get_release.outputs.result }}"); do
-            #       filename=$(basename $asset)
-            #       curl -L -o release-assets/$filename $asset
-            #       if [[ $filename == app-foss*.apk ]]; then
-            #         echo "foss=$filename" >> $GITHUB_ENV
-            #       elif [[ $filename == app-full*.apk ]]; then
-            #         echo "full=$filename" >> $GITHUB_ENV
-            #       fi
-            #     done
-
-            # - name: Create a new release
-            #   id: create_release
-            #   uses: actions/create-release@v1
-            #   env:
-            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #   with:
-            #     tag_name: ${{ steps.get_release.outputs.result.tag_name }}
-            #     release_name: ${{ steps.get_release.outputs.result.name }}
-            #     body: ${{ steps.get_release.outputs.result.body }}
-            #     draft: false
-            #     prerelease: false
-
-            # - name: Publish
-            #   uses: actions/upload-release-asset@v1.0.1
-            #   env:
-            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #   with:
-            #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-            #     asset_path: release-assets/${{ env.full }}
-            #     asset_name: ${{ env.full }}
-            #     asset_content_type: application/zip
+      - name: Sync to Xposed Repo
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          target_owner: Xposed-Modules-Repo
+          target_repo: io.github.hsskyboy.forkmovinggps
+          target_path: target_path
+        run: |
+          # 這裡需要 checkout 目標倉庫
+          git clone https://${{ secrets.PAT }}@github.com/${{ env.target_owner }}/${{ env.target_repo }}.git ${{ env.target_path }}
+          
+          cd ${{ env.target_path }}
+          # 複製當前倉庫的 README 和 LICENSE 過去
+          cp ../README.md ../LICENSE .
+          
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          git add README.md LICENSE
+          
+          # 只有當有變更時才提交，避免報錯
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Sync README/LICENSE from source for version ${{ steps.get_version.outputs.VERSION }}"
+            git push
+          else
+            echo "No changes to commit"
+          fi
