@@ -2867,5 +2867,6 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         binding.setLocationButton.visibility = View.VISIBLE
 
         // Navigation stopped - no need for toast
+        }
     }
 }
