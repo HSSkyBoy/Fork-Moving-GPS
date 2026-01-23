@@ -370,14 +370,14 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     // Fallback to default location (Hanoi)
                     lat = 21.0285
                     lon = 105.8542
-                    showToast("Không lấy được vị trí hiện tại. Sử dụng vị trí mặc định.")
+                    showToast(getString(R.string.error_location_unavailable_using_default))
                 }
             }
         } catch (e: Exception) {
             // Fallback to default location
             lat = 21.0285
             lon = 105.8542
-            showToast("Lỗi lấy vị trí: ${e.message}")
+            showToast(getString(R.string.error_location_fetch, e.message))
         }
     }
 
@@ -387,7 +387,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 // Always allow clicking to set/change destination in SEARCH mode
                 setDestinationMarker(position)
                 if (destMarker != null) {
-                    // showToast("Đã chọn điểm đến. Nhấn 'Chỉ đường' để lên kế hoạch route")
+                    // showToast("Destination selected. Press 'Get Directions' to plan route")
                 }
             }
             AppMode.ROUTE_PLAN -> {
@@ -399,12 +399,12 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     // After first click - only allow drag/drop for fine-tuning
                     // User can see the marker, no need for toast
                 } else {
-                    showToast("Vui lòng chọn điểm đến trước, rồi nhấn 'Chỉ đường'")
+                    showToast(getString(R.string.instruction_select_dest_first))
                 }
             }
             AppMode.NAVIGATION -> {
                 // Prevent any map interactions during navigation
-                showToast("Không thể thay đổi điểm đến khi đang di chuyển")
+                showToast(getString(R.string.error_cannot_change_dest_moving))
             }
         }
     }
@@ -531,15 +531,15 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         isGpsSet = viewModel.isStarted
         updateSetLocationButton()
 
-        // Main action button (Chỉ đường / Bắt đầu)
+        // Main action button (Get Directions / Start)
         binding.actionButton.setOnClickListener {
             when (currentMode) {
                 AppMode.SEARCH -> {
-                    // "Chỉ đường" button: enter route planning mode
+                    // "Get Directions" button: enter route planning mode
                     if (destMarker != null) {
                         enterRoutePlanMode()
                     } else {
-                        showToast("Vui lòng chọn điểm đến trước")
+                        showToast("Please select a destination first")
                     }
                 }
                 AppMode.ROUTE_PLAN -> {
@@ -548,9 +548,9 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                         startNavigation()
                     } else if (destMarker != null && startMarker == null) {
                         // Only destination set - remind to pick start point
-                        showToast("Vui lòng chọn điểm bắt đầu trên bản đồ")
+                        showToast(getString(R.string.error_select_start_on_map))
                     } else {
-                        showToast("Vui lòng chọn điểm bắt đầu và điểm đến")
+                        showToast(getString(R.string.error_select_start_and_dest))
                     }
                 }
                 AppMode.NAVIGATION -> {
@@ -629,7 +629,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             // Update button visibility
             updateReplaceLocationButtonVisibility()
 
-            showToast("Đã thay thế vị trí fake GPS")
+            showToast(getString(R.string.msg_fake_gps_replaced))
         }
 
         // Camera Follow Toggle Button (only works during navigation)
@@ -638,9 +638,9 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 isCameraFollowing = !isCameraFollowing
                 updateCameraFollowButton()
 //                if (isCameraFollowing) {
-//                    showToast("Camera bám theo vị trí")
+//                    showToast("Camera follows location")
 //                } else {
-//                    showToast("Camera tự do")
+//                    showToast("Free camera")
 //                }
             }
         }
@@ -701,7 +701,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 binding.pauseButton.visibility = View.GONE
                 binding.resumeButton.visibility = View.VISIBLE
                 binding.stopButton.visibility = View.VISIBLE
-                // showToast("Đã tạm dừng")
+                // showToast("Paused")
             }
         }
 
@@ -722,7 +722,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 binding.pauseButton.visibility = View.VISIBLE
                 binding.resumeButton.visibility = View.GONE
                 binding.stopButton.visibility = View.GONE
-                // showToast("Tiếp tục di chuyển")
+                // showToast("Resuming movement")
             }
         }
 
@@ -750,7 +750,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 setStartMarkerWithSelection(currentFakeLocationPos!!)
                 // Update button visibility (will hide since start point now matches fake GPS)
                 updateUseCurrentLocationButtonVisibility()
-                // showToast("Đã chọn vị trí hiện tại làm điểm bắt đầu")
+                // showToast("Current location selected as start point")
             }
         }
 
@@ -874,7 +874,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     }.trim()
 
                     // If we have both feature name and street address, combine them
-                    // e.g., "Mộc Hương, 89 Lê Đức Thọ" or "Sunsquare, 11/66/132 Cầu Diễn"
+                    // e.g., "Moc Huong, 89 Le Duc Tho" or "Sunsquare, 11/66/132 Cau Dien"
                     if (!featureName.isNullOrBlank() && streetAddress.isNotBlank()) {
                         addressParts.add("$featureName, $streetAddress")
                     } else {
@@ -885,17 +885,17 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                         }
                     }
 
-                    // 3. Sub-locality (Phường)
+                    // 3. Sub-locality (Ward)
                     address.subLocality?.let {
                         if (it.isNotBlank()) addressParts.add(it)
                     }
 
-                    // 4. Locality (Quận/Huyện)
+                    // 4. Locality (District)
                     address.locality?.let {
                         if (it.isNotBlank() && it != address.subLocality) addressParts.add(it)
                     }
 
-                    // 5. Administrative area (Tỉnh/Thành phố)
+                    // 5. Administrative area (Province/City)
                     address.adminArea?.let {
                         if (it.isNotBlank()) addressParts.add(it)
                     }
@@ -929,7 +929,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         destMarker = mMap.addMarker(
             MarkerOptions()
                 .position(position)
-                .title("Điểm đến")
+                .title("Destination")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .draggable(currentMode == AppMode.SEARCH || currentMode == AppMode.ROUTE_PLAN) // Draggable in SEARCH and ROUTE_PLAN modes
         )
@@ -943,10 +943,10 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             binding.destinationSearch.setText(address)
         }
 
-        // Show "Chỉ đường" button AND close button in SEARCH mode
+        // Show "Get Directions" button AND close button in SEARCH mode
         if (currentMode == AppMode.SEARCH) {
             binding.actionButton.apply {
-                text = "Chỉ đường"
+                text = "Get Directions"
                 visibility = View.VISIBLE
                 setIconResource(R.drawable.ic_navigation)
             }
@@ -957,7 +957,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             }
         }
 
-        // Stay in SEARCH mode - only "Chỉ đường" button switches to PLAN mode
+        // Stay in SEARCH mode - only "Get Directions" button switches to PLAN mode
         // This allows user to keep clicking to change destination
 
         // If in route planning mode and destination changes, clear route
@@ -1024,7 +1024,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         startMarker = mMap.addMarker(
             MarkerOptions()
                 .position(position)
-                .title("Điểm bắt đầu")
+                .title("Start Point")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .draggable(currentMode == AppMode.ROUTE_PLAN) // Only draggable in route planning mode
         )
@@ -1081,7 +1081,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
         // Update cancel button text for ROUTE_PLAN mode
         binding.cancelRouteButton.apply {
-            text = "Huỷ"
+            text = "Cancel"
             visibility = View.GONE // Hide until route is drawn
         }
 
@@ -1118,7 +1118,11 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             // Show button only if start point not selected or different from fake GPS
             if (startPos == null || !isSameLocation) {
                 binding.useCurrentLocationContainer.visibility = View.VISIBLE
-                binding.useCurrentLocationText.text = "Dùng vị trí hiện tại (${String.format("%.4f", currentFakeLocationPos!!.latitude)}, ${String.format("%.4f", currentFakeLocationPos!!.longitude)})"
+                binding.useCurrentLocationText.text = getString(
+                    R.string.use_current_location_fmt,
+                    String.format("%.4f", currentFakeLocationPos!!.latitude),
+                    String.format("%.4f", currentFakeLocationPos!!.longitude)
+                )
             } else {
                 binding.useCurrentLocationContainer.visibility = View.GONE
             }
@@ -1143,7 +1147,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             destMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
-                    .title("Điểm đến")
+                    .title("Destination")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                     .draggable(isDestDraggable)
             )
@@ -1156,7 +1160,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             startMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
-                    .title("Điểm bắt đầu")
+                    .title("Start Point")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                     .draggable(isStartDraggable)
             )
@@ -1168,7 +1172,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
      */
     private fun swapStartAndDestination() {
         if (startMarker == null || destMarker == null) {
-            showToast("Cần có cả 2 điểm để đảo ngược")
+            showToast("Both points are required to swap")
             return
         }
 
@@ -1188,7 +1192,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         destMarker = mMap.addMarker(
             MarkerOptions()
                 .position(startPos)
-                .title("Điểm đến")
+                .title("Destination")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .draggable(currentMode == AppMode.ROUTE_PLAN)
         )
@@ -1196,7 +1200,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         startMarker = mMap.addMarker(
             MarkerOptions()
                 .position(destPos)
-                .title("Điểm bắt đầu")
+                .title("Start Point")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .draggable(currentMode == AppMode.ROUTE_PLAN)
         )
@@ -1210,7 +1214,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             drawRoute()
         }
 
-        // showToast("Đã đảo ngược điểm bắt đầu và điểm đến")
+        // showToast(getString(R.string.msg_swapped_locations))
     }
 
     private fun drawRoute() {
@@ -1223,7 +1227,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             visibility = View.GONE
         }
         binding.routeLoadingCard.visibility = View.VISIBLE
-        binding.routeLoadingProgressText.text = "Đang tìm tuyến đường..."
+        binding.routeLoadingProgressText.text = getString(R.string.status_finding_route)
 
         lifecycleScope.launch {
             try {
@@ -1290,7 +1294,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
                 if (result == null && !isCacheValid) {
                     // Handle error - all services failed and no cache
-                    routeLoadError = "Không tìm thấy đường đi. Vui lòng thử lại."
+                    routeLoadError = getString(R.string.error_route_not_found)
                     isLoadingRoute = false
                     showRouteErrorUI()
                     return@launch
@@ -1310,47 +1314,47 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 routeLoadError = null
                 binding.routeLoadingCard.visibility = View.GONE
 
-                // Update button to "Bắt đầu" with cancel button
+                // Update button to "Start" with cancel button
                 binding.actionButton.apply {
-                    text = "Bắt đầu"
+                    text = "Start"
                     setIconResource(R.drawable.ic_navigation)
                     visibility = View.VISIBLE
                 }
                 binding.cancelRouteButton.apply {
-                    text = "Huỷ"
+                    text = "Cancel"
                     visibility = View.VISIBLE
                 }
 
-                // showToast("Đường đi đã sẵn sàng. Nhấn Bắt đầu để di chuyển")
+                // showToast("Route ready. Press Start to move")
 
             } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
                 // CRITICAL FIX: Detailed error messages
-                routeLoadError = "Hết thời gian chờ. Vui lòng kiểm tra kết nối mạng và thử lại."
+                routeLoadError = getString(R.string.error_timeout)
                 isLoadingRoute = false
                 showRouteErrorUI()
             } catch (e: retrofit2.HttpException) {
                 // CRITICAL FIX: HTTP error codes
                 val code = e.code()
                 routeLoadError = when (code) {
-                    401 -> "API key không hợp lệ. Vui lòng kiểm tra cài đặt."
-                    429 -> "Đã vượt quá giới hạn API. Vui lòng thử lại sau."
-                    500, 502, 503 -> "Lỗi server. Vui lòng thử lại sau."
-                    else -> "Lỗi kết nối ($code). Vui lòng thử lại."
+                    401 -> getString(R.string.error_api_key_invalid)
+                    429 -> getString(R.string.error_api_limit_exceeded)
+                    500, 502, 503 -> getString(R.string.error_server)
+                    else -> getString(R.string.error_connection_code, code)
                 }
                 isLoadingRoute = false
                 showRouteErrorUI()
             } catch (e: java.net.UnknownHostException) {
-                routeLoadError = "Không có kết nối mạng. Vui lòng kiểm tra WiFi/dữ liệu di động."
+                routeLoadError = getString(R.string.error_no_network)
                 isLoadingRoute = false
                 showRouteErrorUI()
             } catch (e: java.net.SocketTimeoutException) {
-                routeLoadError = "Kết nối quá chậm. Vui lòng kiểm tra mạng và thử lại."
+                routeLoadError = getString(R.string.error_connection_slow)
                 isLoadingRoute = false
                 showRouteErrorUI()
             } catch (e: Exception) {
                 // CRITICAL FIX: Better error logging
                 android.util.Log.e("MapActivity", "Unexpected route error: ${e.message}", e)
-                routeLoadError = "Lỗi không xác định: ${e.message ?: "Vui lòng thử lại"}"
+                routeLoadError = getString(R.string.error_unknown_cause, e.message ?: "Please try again")
                 isLoadingRoute = false
                 showRouteErrorUI()
             }
@@ -1362,7 +1366,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         isLoadingRoute = false
         binding.routeLoadingCard.visibility = View.GONE
         binding.routeErrorCard.visibility = View.VISIBLE
-        binding.routeErrorText.text = routeLoadError ?: "Không xác định lỗi"
+        binding.routeErrorText.text = routeLoadError ?: getString(R.string.error_unknown)
         
         // Reset button states based on current mode
         when (currentMode) {
@@ -1419,9 +1423,9 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         binding.startSearchContainer.visibility = View.GONE
         binding.useCurrentLocationContainer.visibility = View.GONE
 
-        // Show "Chỉ đường" button again with destination marker still visible
+        // Show "Get Directions" button again with destination marker still visible
         binding.actionButton.apply {
-            text = "Chỉ đường"
+            text = "Get Directions"
             setIconResource(R.drawable.ic_navigation)
             visibility = View.VISIBLE
         }
@@ -1438,18 +1442,18 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // Update swap button visibility (will hide since startMarker is null)
         updateSwapButtonVisibility()
 
-        // showToast("Đã huỷ chỉ đường")
+        // showToast("Route planning cancelled")
     }
 
     private fun startNavigation() {
         // Basic validation only
         when {
             routePoints.isEmpty() -> {
-                showToast("Chưa có đường đi")
+                showToast(getString(R.string.error_no_route_data))
                 return
             }
             routePoints.size < 2 -> {
-                showToast("Đường đi không hợp lệ (cần ít nhất 2 điểm)")
+                showToast(getString(R.string.error_invalid_route))
                 return
             }
         }
@@ -1466,7 +1470,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // Update markers to be non-draggable during navigation
         updateMarkersDraggableState()
 
-        // Clear old fake location marker, circle AND center dot when starting navigation
+        // Clear old fake location marker, circle AND centre dot when starting navigation
         // because the fake location is now moving along the route
         fakeLocationMarker?.remove()
         fakeLocationMarker = null
@@ -1536,7 +1540,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // Create fake location circle to show current GPS position during navigation
         // CRITICAL FIX: Use firstOrNull to prevent crash
         val startPos = routePoints.firstOrNull() ?: run {
-            showToast("Lỗi: Không tìm thấy điểm bắt đầu")
+            showToast(getString(R.string.error_start_point_not_found))
             isDriving = false
             return
         }
@@ -2158,7 +2162,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
         // Show completion action bar instead of dialog
         binding.completionActionsCard.visibility = View.VISIBLE
-        // showToast("Đã đến đích!")
+        // showToast(getString(R.string.msg_arrived))
     }
 
     private fun resetToSearchMode() {
@@ -2234,7 +2238,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 lastJoystickLon = lng
 
                 android.util.Log.d("MapActivity", "Restored fake location from previous session: $lat, $lng")
-                // showToast("Đánh dấu lại vị trí GPS lần trước: ${String.format("%.4f", lat)}, ${String.format("%.4f", lng)}")
+                // showToast(getString(R.string.restored_prev_location_fmt, String.format("%.4f", lat), String.format("%.4f", lng)))
             }
         }
     }
@@ -2415,10 +2419,10 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                         Manifest.permission.ACCESS_FINE_LOCATION
                     )) {
                     // User denied but not permanently - show explanation
-                    showToast("Cần quyền vị trí để hiển thị vị trí hiện tại trên bản đồ")
+                    showToast(getString(R.string.permission_location_rationale))
                 } else {
                     // User denied permanently - guide to settings
-                    showToast("Vui lòng bật quyền vị trí trong Cài đặt")
+                    showToast(getString(R.string.permission_location_settings))
                 }
             }
         }
@@ -2545,7 +2549,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     override fun onMarkerDragEnd(marker: Marker) {
         // Prevent dragging during navigation
         if (currentMode == AppMode.NAVIGATION) {
-            showToast("Cannot change destination while moving")
+            showToast(getString(R.string.error_cannot_change_dest_moving))
             return
         }
 
@@ -2576,7 +2580,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     override fun onMarkerDragStart(marker: Marker) {
         // Allow dragging in both SEARCH and ROUTE_PLAN modes
         if (currentMode == AppMode.NAVIGATION) {
-            showToast("Cannot change destination while moving")
+            showToast(getString(R.string.error_cannot_change_dest_moving))
             return
         }
 
@@ -2778,7 +2782,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
             // Navigation restarted - no need for toast
         } else {
-            showToast("Cannot restart - route data is lost")
+            showToast(getString(R.string.error_restart_lost_data))
         }
     }
 

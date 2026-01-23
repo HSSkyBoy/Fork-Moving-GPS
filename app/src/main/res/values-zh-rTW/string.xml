@@ -1,8 +1,8 @@
 <resources>
 
     <!-- Home -->
-    <string name="app_name">虛擬移動 GPS</string>
-    <string name="xposed_desc">基於 Xposed 框架的虛擬定位工具。</string>
+    <string name="app_name">Fork Moving GPS</string>
+    <string name="xposed_desc">基於 Xposed 框架的虛擬定位工具</string>
     <string name="search">搜尋</string>
     <string name="address">輸入地址</string>
     <string name="favorites">我的最愛</string>
@@ -16,20 +16,13 @@
     <string name="getlocation_desc">取得目前位置</string>
     <string name="addfavorite_desc">加入我的最愛</string>
 
-    <!-- Errors -->
-    <string name="error_xposed_module_missing">Xposed 模組未啟用</string>
-    <string name="error_xposed_module_missing_desc">請在 LSPosed 管理員中啟用此模組並重啟裝置</string>
-
     <!-- About -->
     <string name="about">關於</string>
     <string name="about_info">開發人員：\n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\n基於 Xposed 框架開發的虛擬定位工具。</string>
-    <string name="error_geocoding_unavailable">此裝置不支援地理編碼服務 (Geocoding)</string>
-    <string name="error_location_not_found_query">找不到地點：「%1$s」</string>
-    <string name="error_search_timeout">搜尋逾時，請稍後再試</string>
-    <string name="error_search_failed">搜尋失敗：%1$s</string>
-    <string name="error_unknown">未知錯誤</string>
 
     <!-- Dialog -->
+    <string name="error_xposed_module_missing">Xposed 模組未啟用</string>
+    <string name="error_xposed_module_missing_desc">請在 LSPosed 管理員中啟用此模組並重啟裝置</string>
     <string name="add_fav_dialog_title">加入我的最愛</string>
     <string name="dialog_button_add">新增</string>
     <string name="location_not_select">尚未選擇地點</string>
@@ -38,22 +31,56 @@
     <!-- SettingActivity -->
     <string name="xposed">Xposed 設定</string>
     <string name="settings">偏好設定</string>
-    <string name="settings_of_accuracy">定位精確度 (米)</string>
-    <string name="preference_category_general">一般設定</string>
+    <string name="settings_of_accuracy">精確度</string>
+    <string name="preference_category_general">一般</string>
     <string name="enter_valid_input">請輸入有效數字</string>
-    <string name="delete_favorite_item">刪除此最愛項目</string>
+    <string name="delete_favorite_item">刪除我的最愛</string>
     <string name="title_activity_settings">設定</string>
     <string name="check_update">檢查更新</string>
-    <string name="check_update_summary">自動從 GitHub 檢查是否有最新版本</string>
-    <string name="enable_joystick">啟用搖桿</string>
-    <string name="enable_joystick_summary">使用螢幕搖桿即時控制位置（實驗性功能）</string>
-    <string name="advanced_hook">系統級定位攔截 (Hook)</string>
-    <string name="advanced_summary">透過攔截系統 API 提供更穩定的定位模擬（更改後需重啟）</string>
-    <string name="random_position">隨機偏移</string>
-    <string name="random_position_summary">在設定的位置周圍產生隨機微幅偏移，避免被偵測</string>
-    <string name="drawer_open">開啟側拉選單</string>
-    <string name="drawer_close">關閉側拉選單</string>
-    <string name="app_update_failed">程式更新失敗</string>
-    <string name="dark_theme">深色模式</string>
+    <string name="check_update_summary">自動從 GitHub 檢查最新版本</string>
+    <string name="enable_joystick">使用搖桿</string>
+    <string name="enable_joystick_summary">使用搖桿控制位置 (實驗性功能 )</string>
+    <string name="advanced_hook">Hook 系統定位</string>
+    <string name="advanced_summary">Hook 系統以獲得更好的位置設定效果 (需要重新啟動 )</string>
+    <string name="random_position">隨機位置</string>
+    <string name="random_position_summary">在設定的位置周圍使用隨機位置</string>
+    <string name="drawer_open">開啟</string>
+    <string name="drawer_close">關閉</string>
+    <string name="app_update_failed">更新失敗</string>
+    <string name="dark_theme">深色主題</string>
+
+    <!-- Error -->
+    <string name="error_location_unavailable_using_default">無法取得當前位置，將使用預設位置。</string>
+    <string name="error_location_fetch">位置錯誤：%1$s</string>
+    <string name="instruction_select_dest_first">請先選擇目的地，然後點選「規劃路線」。</string>
+    <string name="error_cannot_change_dest_moving">移動期間無法更改目的地。</string>
+    <string name="error_select_start_on_map">請在地圖上選擇起點。</string>
+    <string name="error_select_start_and_dest">請選擇起點與目的地。</string>
+    <string name="msg_fake_gps_replaced">虛擬 GPS 位置已取代。</string>
+    <string name="use_current_location_fmt">使用當前位置 (%1$s, %2$s)</string>
+    <string name="msg_swapped_locations">起點與目的地已對調。</string>
+    <string name="status_finding_route">正在尋找路線...</string>
+    <string name="error_route_not_found">找不到路線，請再試一次。</string>
+    <string name="error_timeout">要求逾時。請檢查您的網路連線並再試一次。</string>
+    <string name="error_api_key_invalid">無效的 API 金鑰，請檢查設定。</string>
+    <string name="error_api_limit_exceeded">已超過 API 使用限制，請稍後再試。</string>
+    <string name="error_server">伺服器錯誤，請稍後再試。</string>
+    <string name="error_connection_code">連線錯誤 (%1$d)，請再試一次。</string>
+    <string name="error_no_network">無網路連線，請檢查 WiFi 或行動資料。</string>
+    <string name="error_connection_slow">連線速度過慢，請檢查網路並再試一次。</string>
+    <string name="error_unknown_cause">未知錯誤：%1$s</string>
+    <string name="error_no_route_data">沒有可用的路線資料。</string>
+    <string name="error_invalid_route">無效路線 (至少需要 2 個點 )。</string>
+    <string name="error_start_point_not_found">錯誤：找不到起點。</string>
+    <string name="permission_location_rationale">需要定位許可權才能在地圖上顯示您的當前位置。</string>
+    <string name="permission_location_settings">請在設定中開啟定位許可權。</string>
+    <string name="restored_prev_location_fmt">已恢復之前的位置：%1$s, %2$s</string>
+    <string name="msg_arrived">已抵達目的地！</string>
+    <string name="error_restart_lost_data">無法重新開始，路線資料已遺失</string>
+    <string name="error_geocoding_unavailable">此裝置不支援地理編碼服務 (Geocoding)</string>
+    <string name="error_location_not_found_query">找不到地點：「%1$s」</string>
+    <string name="error_search_timeout">搜尋逾時，請稍後再試</string>
+    <string name="error_search_failed">搜尋失敗：%1$s</string>
+    <string name="error_unknown">未知錯誤</string>
 
 </resources>

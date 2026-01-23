@@ -1,38 +1,29 @@
 <resources>
 
     <!-- Home -->
-    <string name="app_name">Fake Moving GPS</string>
+    <string name="app_name">Fork Moving GPS</string>
     <string name="xposed_desc">A moving GPS simulator based on the Xposed framework.</string>
     <string name="search">Search</string>
-    <string name="address">United States</string>
+    <string name="address">Enter address</string>
     <string name="favorites">Favorites</string>
     <string name="address_not_found">Address not found</string>
-    <string name="cant_save">Can\'t save</string>
+    <string name="cant_save">Cannot save</string>
     <string name="location_set">Location set</string>
-    <string name="title">Location set notification</string>
-    <string name="des">Show notification when location is set</string>
-    <string name="location_unset">Location unset</string>
-    <string name="no_internet">No Internet</string>
+    <string name="title">Location Status Notification</string>
+    <string name="des">When simulated location is enabled, display the status in the notification bar</string>
+    <string name="location_unset">Location not set</string>
+    <string name="no_internet">No internet connection</string>
     <string name="getlocation_desc">Get current location</string>
-    <string name="addfavorite_desc">Add favorite</string>
-
-    <!-- Errors -->
-    <string name="error_xposed_module_missing">Xposed module is not enabled</string>
-    <string name="error_xposed_module_missing_desc">Enable this module in LSPosed Manager</string>
+    <string name="addfavorite_desc">Add to favorites</string>
 
     <!-- About -->
-    <string name="about">About</string>
-    <string name="about_info">Brought to you by \n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\nA GPS setter based on the Xposed framework.</string>
+        <string name="about">About</string>
+        <string name="about_info">Developers: \n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\nA virtual location tool developed based on the Xposed framework.</string>
 
-    <!-- Update -->
-    <string name="download_manager_description">Downloading update</string>
-    <string name="update_button">Update</string>
-    <string name="update_available">Update available</string>
-    <string name="bs_update_download_failed">Failed</string>
-
-
-    <!-- Dialog -->
-    <string name="add_fav_dialog_title">Add favorite</string>
+        <!-- Dialog -->
+    <string name="error_xposed_module_missing">Xposed module not enabled</string>
+    <string name="error_xposed_module_missing_desc">Please enable this module in LSPosed admin and restart the device</string>
+    <string name="add_fav_dialog_title">Add to My Favorites</string>
     <string name="dialog_button_add">Add</string>
     <string name="location_not_select">Location not selected</string>
     <string name="save">Save</string>
@@ -57,5 +48,39 @@
     <string name="drawer_close">Close</string>
     <string name="app_update_failed">Update failed</string>
     <string name="dark_theme">Dark theme</string>
+
+    <!-- Error -->
+    <string name="error_location_unavailable_using_default">Unable to obtain current location, will use default location.</string>
+    <string name="error_location_fetch">Location error: %1$s</string>
+    <string name="instruction_select_dest_first">Please select the destination first, then click "Plan route".</string>
+    <string name="error_cannot_change_dest_moving">Destination cannot be changed while moving.</string>
+    <string name="error_select_start_on_map">Please select the starting point on the map.</string>
+    <string name="error_select_start_and_dest">Please select the starting point and destination.</string>
+    <string name="msg_fake_gps_replaced">Mock GPS location has been replaced.</string>
+    <string name="use_current_location_fmt">Using current location (%1$s, %2$s)</string>
+    <string name="msg_swapped_locations">Starting point and destination have been swapped.</string>
+    <string name="status_finding_route">Finding route...</string>
+    <string name="error_route_not_found">Route not found, please try again.</string>
+    <string name="error_timeout">Request timed out. Please check your internet connection and try again.</string>
+    <string name="error_api_key_invalid">Invalid API key, please check the settings.</string>
+    <string name="error_api_limit_exceeded">API usage limit exceeded, please try again later.</string>
+    <string name="error_server">Server error, please try again later.</string>
+    <string name="error_connection_code">Connection error (%1$d), please try again.</string>
+    <string name="error_no_network">No internet connection, please check WiFi or mobile data.</string>
+    <string name="error_connection_slow">Connection speed is too slow, please check the network and try again.</string>
+    <string name="error_unknown_cause">Unknown error: %1$s</string>
+    <string name="error_no_route_data">No available route data.</string>
+    <string name="error_invalid_route">Invalid route (at least 2 points are required).</string>
+    <string name="error_start_point_not_found">Error: Start point not found.</string>
+    <string name="permission_location_rationale">Location permission is required to display your current location on the map.</string>
+    <string name="permission_location_settings">Please enable location permission in settings.</string>
+    <string name="restored_prev_location_fmt">Previous location restored: %1$s, %2$s</string>
+    <string name="msg_arrived">Arrived at destination!</string>
+    <string name="error_restart_lost_data">Unable to restart, route data is lost</string>
+    <string name="error_geocoding_unavailable">This device does not support geocoding services (Geocoding)</string>
+    <string name="error_location_not_found_query">Location not found: «%1$s»</string>
+    <string name="error_search_timeout">Search timed out, please try again later</string>
+    <string name="error_search_failed">Search failed: %1$s</string>
+    <string name="error_unknown">Unknown error</string>
 
 </resources>
