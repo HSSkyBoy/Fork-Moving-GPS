@@ -1,0 +1,59 @@
+<resources>
+
+    <!-- Home -->
+    <string name="app_name">虛擬移動 GPS</string>
+    <string name="xposed_desc">基於 Xposed 框架的虛擬定位工具。</string>
+    <string name="search">搜尋</string>
+    <string name="address">輸入地址</string>
+    <string name="favorites">我的最愛</string>
+    <string name="address_not_found">找不到該地址</string>
+    <string name="cant_save">無法儲存</string>
+    <string name="location_set">定位已設定</string>
+    <string name="title">定位狀態通知</string>
+    <string name="des">當模擬定位開啟時，在通知列顯示狀態</string>
+    <string name="location_unset">定位未設定</string>
+    <string name="no_internet">無網路連線</string>
+    <string name="getlocation_desc">取得目前位置</string>
+    <string name="addfavorite_desc">加入我的最愛</string>
+
+    <!-- Errors -->
+    <string name="error_xposed_module_missing">Xposed 模組未啟用</string>
+    <string name="error_xposed_module_missing_desc">請在 LSPosed 管理員中啟用此模組並重啟裝置</string>
+
+    <!-- About -->
+    <string name="about">關於</string>
+    <string name="about_info">開發人員：\n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\n基於 Xposed 框架開發的虛擬定位工具。</string>
+    <string name="error_geocoding_unavailable">此裝置不支援地理編碼服務 (Geocoding)</string>
+    <string name="error_location_not_found_query">找不到地點：「%1$s」</string>
+    <string name="error_search_timeout">搜尋逾時，請稍後再試</string>
+    <string name="error_search_failed">搜尋失敗：%1$s</string>
+    <string name="error_unknown">未知錯誤</string>
+
+    <!-- Dialog -->
+    <string name="add_fav_dialog_title">加入我的最愛</string>
+    <string name="dialog_button_add">新增</string>
+    <string name="location_not_select">尚未選擇地點</string>
+    <string name="save">儲存</string>
+
+    <!-- SettingActivity -->
+    <string name="xposed">Xposed 設定</string>
+    <string name="settings">偏好設定</string>
+    <string name="settings_of_accuracy">定位精確度 (米)</string>
+    <string name="preference_category_general">一般設定</string>
+    <string name="enter_valid_input">請輸入有效數字</string>
+    <string name="delete_favorite_item">刪除此最愛項目</string>
+    <string name="title_activity_settings">設定</string>
+    <string name="check_update">檢查更新</string>
+    <string name="check_update_summary">自動從 GitHub 檢查是否有最新版本</string>
+    <string name="enable_joystick">啟用搖桿</string>
+    <string name="enable_joystick_summary">使用螢幕搖桿即時控制位置（實驗性功能）</string>
+    <string name="advanced_hook">系統級定位攔截 (Hook)</string>
+    <string name="advanced_summary">透過攔截系統 API 提供更穩定的定位模擬（更改後需重啟）</string>
+    <string name="random_position">隨機偏移</string>
+    <string name="random_position_summary">在設定的位置周圍產生隨機微幅偏移，避免被偵測</string>
+    <string name="drawer_open">開啟側拉選單</string>
+    <string name="drawer_close">關閉側拉選單</string>
+    <string name="app_update_failed">程式更新失敗</string>
+    <string name="dark_theme">深色模式</string>
+
+</resources>

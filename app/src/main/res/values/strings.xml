@@ -22,7 +22,7 @@
 
     <!-- About -->
     <string name="about">About</string>
-    <string name="about_info">Brought to you by \n@mwarevn (2024-2025) \n@Android1500 (2022-2023) \n\nA GPS setter based on the Xposed framework.</string>
+    <string name="about_info">Brought to you by \n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\nA GPS setter based on the Xposed framework.</string>
 
     <!-- Update -->
     <string name="download_manager_description">Downloading update</string>

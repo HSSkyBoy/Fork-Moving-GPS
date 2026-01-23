@@ -805,7 +805,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 // IMPORTANT FIX: Check if Geocoder is available
                 if (!Geocoder.isPresent()) {
                     withContext(Dispatchers.Main) {
-                        showToast("Geocoding không khả dụng trên thiết bị này")
+                        showToast(getString(R.string.error_geocoding_unavailable))
                     }
                     return@withContext
                 }
@@ -820,27 +820,27 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     val address = addresses[0]
                     val latLng = LatLng(address.latitude, address.longitude)
 
-                    withContext(Dispatchers.Main) {
-                        onFound(latLng)
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        showToast("Không tìm thấy địa điểm: \"$query\"")
-                    }
-                }
-            } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
                 withContext(Dispatchers.Main) {
-                    showToast("Tìm kiếm quá lâu. Vui lòng thử lại.")
+                    onFound(latLng)
                 }
-            } catch (e: IOException) {
+            } else {
                 withContext(Dispatchers.Main) {
-                    showToast("Lỗi kết nối. Vui lòng kiểm tra mạng.")
+                    showToast(getString(R.string.error_location_not_found_query, query))
                 }
-            } catch (e: Exception) {
-                android.util.Log.e("MapActivity", "Geocoding error: ${e.message}", e)
-                withContext(Dispatchers.Main) {
-                    showToast("Lỗi tìm kiếm: ${e.message ?: "Không xác định"}")
-                }
+            }
+        } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
+            withContext(Dispatchers.Main) {
+                showToast(getString(R.string.error_search_timeout))
+            }
+        } catch (e: IOException) {
+            withContext(Dispatchers.Main) {
+                showToast(getString(R.string.no_internet))
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("MapActivity", "Geocoding error: ${e.message}", e)
+            withContext(Dispatchers.Main) {
+                val errorMsg = e.message ?: getString(R.string.error_unknown)
+                showToast(getString(R.string.error_search_failed, errorMsg))
             }
         }
     }
@@ -1753,14 +1753,14 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
         binding.actionButton.visibility = View.VISIBLE
         binding.actionButton.apply {
-            text = "Dừng"
+            text = "Stop"
             setIconResource(R.drawable.ic_stop)
         }
 
         // Reset to search mode
         resetToSearchMode()
 
-        // showToast("Đã dừng di chuyển")
+        // showToast("Has stopped moving")
     }
 
     private fun updateSetLocationButton() {
@@ -2545,7 +2545,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     override fun onMarkerDragEnd(marker: Marker) {
         // Prevent dragging during navigation
         if (currentMode == AppMode.NAVIGATION) {
-            showToast("Không thể thay đổi điểm đến khi đang di chuyển")
+            showToast("Cannot change destination while moving")
             return
         }
 
@@ -2576,7 +2576,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     override fun onMarkerDragStart(marker: Marker) {
         // Allow dragging in both SEARCH and ROUTE_PLAN modes
         if (currentMode == AppMode.NAVIGATION) {
-            showToast("Không thể thay đổi điểm đến khi đang di chuyển")
+            showToast("Cannot change destination while moving")
             return
         }
 
@@ -2778,7 +2778,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
             // Navigation restarted - no need for toast
         } else {
-            showToast("Không thể bắt đầu lại - dữ liệu route đã mất")
+            showToast("Cannot restart - route data is lost")
         }
     }
 
