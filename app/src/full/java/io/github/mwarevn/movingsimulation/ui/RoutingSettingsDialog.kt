@@ -40,9 +40,9 @@ object RoutingSettingsDialog {
         vehicleTypeSpinner.setSelection(vehicleTypes.indexOf(currentType))
         
         AlertDialog.Builder(context)
-            .setTitle("Cài đặt tìm đường")
+            .setTitle("Set the path")
             .setView(dialogView)
-            .setPositiveButton("Lưu") { _, _ ->
+            .setPositiveButton("Save") { _, _ ->
                 val apiKey = apiKeyInput.text.toString().trim()
                 PrefManager.mapBoxApiKey = if (apiKey.isEmpty()) null else apiKey
                 
@@ -51,7 +51,7 @@ object RoutingSettingsDialog {
                 
                 onSaved()
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 }
