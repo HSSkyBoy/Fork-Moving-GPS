@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import io.github.mwarevn.movingsimulation.R
 import io.github.mwarevn.movingsimulation.databinding.ActivityAntiDetectionSettingsBinding
 import io.github.mwarevn.movingsimulation.utils.PrefManager
 
@@ -31,7 +32,7 @@ class AntiDetectionSettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Advanced Anti-Detection"
+            title = getString(R.string.title_anti_detection)
         }
     }
 
@@ -40,60 +41,32 @@ class AntiDetectionSettingsActivity : AppCompatActivity() {
         setupSwitch(
             binding.switchSensorSpoof,
             PrefManager.enableSensorSpoof,
-            "Sensor Spoofing",
-            "🚀 ADVANCED FEATURE\n\n" +
-                    "Synchronizes device sensors (accelerometer, gyroscope, magnetometer) with GPS movement.\n\n" +
-                    "✅ Benefits:\n" +
-                    "• Makes movement feel realistic to apps\n" +
-                    "• Bypasses ML detection of sensor inconsistencies\n" +
-                    "• Uses Kalman filtering for smooth motion\n\n" +
-                    "⚠️ Note:\n" +
-                    "• May affect apps that depend on real sensors\n" +
-                    "• Slightly increases CPU usage\n\n" +
-                    "Recommended for: Advanced detection bypass"
+            R.string.sensor_spoof_title,
+            R.string.sensor_spoof_desc
         ) { PrefManager.enableSensorSpoof = it }
 
         // Advanced Feature 2: Network Simulation
         setupSwitch(
             binding.switchNetworkSimulation,
             PrefManager.enableNetworkSimulation,
-            "Network Simulation",
-            "🚀 ADVANCED FEATURE\n\n" +
-                    "Simulates cell tower and WiFi data to match your fake GPS location.\n\n" +
-                    "✅ Benefits:\n" +
-                    "• Apps can't detect location mismatch via network\n" +
-                    "• Generates realistic WiFi AP names and signal strength\n" +
-                    "• Fakes cell tower ID and location area code\n\n" +
-                    "⚠️ Note:\n" +
-                    "• May affect apps that rely on real network info\n" +
-                    "• Does not affect actual internet connectivity\n\n" +
-                    "Recommended for: Apps that verify location via network triangulation"
+            R.string.network_sim_title,
+            R.string.network_sim_desc
         ) { PrefManager.enableNetworkSimulation = it }
 
         // Advanced Feature 3: Advanced Randomization
         setupSwitch(
             binding.switchAdvancedRandomization,
             PrefManager.enableAdvancedRandomization,
-            "Advanced Randomization",
-            "🚀 ADVANCED FEATURE\n\n" +
-                    "Adds realistic variations to GPS data, timing, and movement patterns.\n\n" +
-                    "✅ Benefits:\n" +
-                    "• Resists device fingerprinting\n" +
-                    "• Defeats ML models analyzing movement patterns\n" +
-                    "• Uses Brownian motion for natural position jitter\n" +
-                    "• Smooth acceleration/deceleration ramps\n\n" +
-                    "⚠️ Note:\n" +
-                    "• May cause slight GPS position variations\n" +
-                    "• Very lightweight - minimal performance impact\n\n" +
-                    "Recommended for: Maximum stealth against advanced detection"
+            R.string.adv_random_title,
+            R.string.adv_random_desc
         ) { PrefManager.enableAdvancedRandomization = it }
     }
 
     private fun setupSwitch(
         switch: SwitchCompat,
         currentValue: Boolean,
-        title: String,
-        description: String,
+        titleRes: Int,
+        descRes: Int,
         onChanged: (Boolean) -> Unit
     ) {
         // Set initial state
@@ -108,15 +81,15 @@ class AntiDetectionSettingsActivity : AppCompatActivity() {
             if (isUpdating) return@setOnCheckedChangeListener
 
             // Show confirmation dialog
-            showFeatureInfo(title, description, isChecked,
+            showFeatureInfo(
+                getString(titleRes),
+                getString(descRes),
+                isChecked,
                 onConfirm = {
                     // User confirmed - save the change
                     onChanged(isChecked)
-                    Toast.makeText(
-                        this,
-                        if (isChecked) "Feature enabled - Restart target app to apply" else "Feature disabled - Restart target app to apply",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    // 使用你提供的正確 ID: msg_feature_updated_restart
+                    Toast.makeText(this, R.string.msg_feature_updated_restart, Toast.LENGTH_SHORT).show()
                 },
                 onCancel = {
                     // User cancelled - revert switch silently
@@ -138,10 +111,10 @@ class AntiDetectionSettingsActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(description)
-            .setPositiveButton(if (enabling) "Enable" else "Disable") { _, _ ->
+            .setPositiveButton(if (enabling) android.R.string.ok else android.R.string.cancel) { _, _ ->
                 onConfirm()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(R.string.btn_cancel) { dialog, _ ->
                 dialog.dismiss()
                 onCancel()
             }
@@ -152,32 +125,23 @@ class AntiDetectionSettingsActivity : AppCompatActivity() {
     private fun setupResetButton() {
         binding.btnResetToDefault.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("Reset to Default")
-                .setMessage(
-                    "This will disable all advanced features (safe default).\n\n" +
-                            "❌ All features will be DISABLED:\n" +
-                            "• Sensor Spoofing\n" +
-                            "• Network Simulation\n" +
-                            "• Advanced Randomization\n\n" +
-                            "Continue?"
-                )
-                .setPositiveButton("Reset") { _, _ ->
+                .setTitle(R.string.dialog_reset_title)
+                .setMessage(R.string.dialog_reset_message)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     PrefManager.resetAntiDetectionToDefault()
-                    Toast.makeText(this, "Reset to default settings", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.msg_feature_updated_restart, Toast.LENGTH_SHORT).show()
                     recreate()
                 }
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.btn_cancel, null)
                 .show()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
         }
+        return super.onOptionsItemSelected(item)
     }
 }

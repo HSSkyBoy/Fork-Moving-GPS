@@ -47,19 +47,15 @@
     <string name="app_update_failed">更新失敗</string>
     <string name="dark_theme">深色主題</string>
 
-    <!-- 活動 -->
+    <!-- Activity -->
     <string name="title_anti_detection">進階偽裝</string>
     <string name="header_advanced_features">🚀 高階功能</string>
-    <string name="desc_advanced_features">啟用高階功能以最大化 GPS 偽裝真實度並繞過複雜偵測。\n\n 點擊每個開關查看詳細資訊。\n\n 變更需要重新啟動目標應用程式。</string>
-    <string name="label_sensor_spoof">Sensor Spoofing</string>
-    <string name="summary_sensor_spoof">同步加速度計、陀螺儀、磁力計與 GPS</string>
-    <string name="desc_sensor_spoof">🚀 高階功能\n\n 同步裝置感測器（加速度計、陀螺儀、磁力計）與 GPS 移動。\n\n✅ 好處:\n• 讓移動感覺對應用程式更真實\n• 繞過機器學習偵測感測器不一致\n• 使用卡爾曼濾波器以獲得平滑運動\n\n⚠️ 注意事項:\n• 可能影響依賴真實感測器的應用程式\n• 稍微增加 CPU 使用率\n\n 推薦給: 高階偵測繞過</string>
-    <string name="label_network_simulation">網絡模擬</string>
-    <string name="summary_network_simulation">偽裝基地台與 WiFi 資料符合 GPS 位置</string>
-    <string name="desc_network_simulation">🚀 高階功能\n\n 模擬基地台與 WiFi 資料，以符合您的偽裝 GPS 位置。\n\n✅ 優點:\n• 應用程式無法透過網路偵測位置不匹配\n• 產生真實的 WiFi 接入點名稱與信號強度\n• 偽裝基地台 ID 與位置區碼\n\n 推薦給: 透過網路三角測量驗證位置的應用程式</string>
-    <string name="label_advanced_randomization">高階隨機化</string>
-    <string name="summary_advanced_randomization">增加真實變化以抵抗機器學習偵測</string>
-    <string name="desc_advanced_randomization">🚀 優先功能\n\n 為 GPS 資料、時間及移動模式增加真實變化。\n\n✅ 好處:\n• 抵抗裝置指紋掃描\n• 打敗分析移動模式的機器學習模型\n• 使用布朗運動進行自然位置抖動\n• 平滑的加減速度斜坡\n\n 推薦給: 最大程度對抗先進偵測</string>
+    <string name="sensor_spoof_title">感測器模擬 (Sensor Spoofing)</string>
+    <string name="sensor_spoof_desc">🚀 進階功能\n\n同步設備感測器（加速度計、陀螺儀、磁力計）與 GPS 移動。\n\n✅ 優點：\n• 讓移動對應用程式顯得真實\n• 繞過機器學習對感測器不一致的檢測\n• 使用卡爾曼濾波實現平滑運動\n\n⚠️ 注意：\n• 可能影響依賴真實感測器的 App\n• 略微增加 CPU 使用率\n\n推薦用於：進階檢測繞過</string>
+    <string name="network_sim_title">網路模擬 (Network Simulation)</string>
+    <string name="network_sim_desc">🚀 進階功能\n\n模擬基地台和 WiFi 數據以匹配您的虛擬 GPS 位置。\n\n✅ 優點：\n• 應用程式無法透過網路比對偵測位置異常\n• 生成真實的 WiFi AP 名稱和訊號強度\n• 模擬基地台 ID 和位置區域代碼 (LAC)\n\n⚠️ 注意：\n• 可能影響依賴真實網路資訊的 App\n• 不影響實際的網際網路連線\n\n推薦用於：透過網路三角定位驗證位置的 App</string>
+    <string name="adv_random_title">進階隨機化 (Advanced Randomization)</string>
+    <string name="adv_random_desc">🚀 進階功能\n\n在 GPS 數據、時間和移動模式中加入真實的變化。\n\n✅ 優點：\n• 防止設備指紋識別\n• 擊敗分析移動模式的機器學習模型\n• 使用布朗運動產生自然的位置抖動\n• 平滑的加速/減速緩衝\n\n⚠️ 注意：\n• 可能導致輕微的 GPS 位置偏差\n• 非常輕量 - 對性能影響極小\n\n推薦用於：針對進階檢測的最高隱身級別</string>
     <string name="msg_feature_updated_restart">功能更新 - 重啟目標應用程式以套用</string>
     <string name="btn_reset_to_default">重設為預設值 (全部停用)</string>
     <string name="dialog_reset_title">重設為預設值</string>

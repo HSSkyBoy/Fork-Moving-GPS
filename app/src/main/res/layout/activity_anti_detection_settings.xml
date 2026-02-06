@@ -28,7 +28,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Information Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,34 +48,13 @@
                         android:textColor="#1565C0"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/desc_advanced_features"
-                        android:textColor="#424242"
-                        android:textSize="14sp" />
-
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Advanced Features -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/title_anti_detection"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="?attr/colorPrimaryContainer">
 
                 <LinearLayout
@@ -89,57 +67,34 @@
                         android:id="@+id/switchSensorSpoof"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_sensor_spoof"
+                        android:text="@string/sensor_spoof_title"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="12dp"
-                        android:text="@string/summary_sensor_spoof"
-                        android:textSize="12sp"
-                        android:alpha="0.7" />
+                    <View android:layout_width="match_parent" android:layout_height="12dp" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchNetworkSimulation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_network_simulation"
+                        android:text="@string/network_sim_title"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="12dp"
-                        android:text="@string/summary_network_simulation"
-                        android:textSize="12sp"
-                        android:alpha="0.7" />
+                    <View android:layout_width="match_parent" android:layout_height="12dp" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchAdvancedRandomization"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_advanced_randomization"
+                        android:text="@string/adv_random_title"
                         android:textSize="15sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/summary_advanced_randomization"
-                        android:textSize="12sp"
-                        android:alpha="0.7" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Reset Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnResetToDefault"
                 android:layout_width="match_parent"
