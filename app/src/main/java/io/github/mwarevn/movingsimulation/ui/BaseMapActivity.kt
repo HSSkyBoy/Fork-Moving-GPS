@@ -24,7 +24,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -62,7 +61,8 @@ abstract class BaseMapActivity: AppCompatActivity() {
     protected var lat by Delegates.notNull<Double>()
     protected var lon by Delegates.notNull<Double>()
     protected val viewModel by viewModels<MainViewModel>()
-    protected val binding by lazy { ActivityMapBinding.inflate(layoutInflater) }
+
+    protected lateinit var binding: ActivityMapBinding
     protected lateinit var alertDialog: MaterialAlertDialogBuilder
     protected lateinit var dialog: AlertDialog
     protected val update by lazy { viewModel.getAvailableUpdate() }
@@ -94,9 +94,11 @@ abstract class BaseMapActivity: AppCompatActivity() {
         enableEdgeToEdge(navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        lifecycleScope.launchWhenCreated {
-            setContentView(binding.root)
-        }
+
+        // 修正：初始化 binding 並設置 contentView
+        binding = ActivityMapBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setSupportActionBar(binding.toolbar)
         initializeMap()
         checkModuleEnabled()

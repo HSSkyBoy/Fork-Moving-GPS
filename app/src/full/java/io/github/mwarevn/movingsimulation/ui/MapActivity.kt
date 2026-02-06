@@ -101,7 +101,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     private var lastJoystickLat = 0.0
     private var lastJoystickLon = 0.0
     private var isActivityVisible = false // Track if activity is visible
-    
+
     // CRITICAL FIX: Use separate scope for RouteSimulator to continue running in background
     // This scope will only be cancelled when Activity is destroyed, not when paused
     // Use Dispatchers.Default for CPU-bound work, ensures it runs even when app is backgrounded
@@ -669,8 +669,8 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     routeSimulator?.setSpeedKmh(actualSpeed)
                     android.util.Log.d("MapActivity", "RouteSimulator speed updated to: $actualSpeed km/h")
                 }
-                }
             }
+        }
 
         // Auto curve speed checkbox
         binding.autoCurveSpeedCheckbox.setOnCheckedChangeListener { _, isChecked ->
@@ -695,7 +695,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 // CRITICAL FIX: Force update completed path before pausing
                 // This ensures the route is drawn up to the pause point
                 forceUpdateCompletedPath()
-                
+
                 isPaused = true
                 routeSimulator?.pause()
                 binding.pauseButton.visibility = View.GONE
@@ -792,7 +792,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         binding.navControlsToggle.setOnClickListener {
             toggleNavigationControls()
         }
-        
+
         // Restore saved state
         restoreNavigationControlsState()
 
@@ -809,7 +809,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     }
                     return@withContext
                 }
-                
+
                 val geocoder = Geocoder(this@MapActivity, Locale.getDefault())
                 // IMPORTANT FIX: Add timeout to prevent hanging
                 val addresses = withTimeout(5000L) { // 5 second timeout
@@ -820,27 +820,28 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     val address = addresses[0]
                     val latLng = LatLng(address.latitude, address.longitude)
 
-                withContext(Dispatchers.Main) {
-                    onFound(latLng)
+                    withContext(Dispatchers.Main) {
+                        onFound(latLng)
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        showToast(getString(R.string.error_location_not_found_query, query))
+                    }
                 }
-            } else {
+            } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
                 withContext(Dispatchers.Main) {
-                    showToast(getString(R.string.error_location_not_found_query, query))
+                    showToast(getString(R.string.error_search_timeout))
                 }
-            }
-        } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
-            withContext(Dispatchers.Main) {
-                showToast(getString(R.string.error_search_timeout))
-            }
-        } catch (e: IOException) {
-            withContext(Dispatchers.Main) {
-                showToast(getString(R.string.no_internet))
-            }
-        } catch (e: Exception) {
-            android.util.Log.e("MapActivity", "Geocoding error: ${e.message}", e)
-            withContext(Dispatchers.Main) {
-                val errorMsg = e.message ?: getString(R.string.error_unknown)
-                showToast(getString(R.string.error_search_failed, errorMsg))
+            } catch (e: IOException) {
+                withContext(Dispatchers.Main) {
+                    showToast(getString(R.string.no_internet))
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("MapActivity", "Geocoding error: ${e.message}", e)
+                withContext(Dispatchers.Main) {
+                    val errorMsg = e.message ?: getString(R.string.error_unknown)
+                    showToast(getString(R.string.error_search_failed, errorMsg))
+                }
             }
         }
     }
@@ -1112,8 +1113,8 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             // Check if start marker exists and matches fake GPS location
             val startPos = startMarker?.position
             val isSameLocation = startPos != null &&
-                Math.abs(startPos.latitude - currentFakeLocationPos!!.latitude) < 0.0001 &&
-                Math.abs(startPos.longitude - currentFakeLocationPos!!.longitude) < 0.0001
+                    Math.abs(startPos.latitude - currentFakeLocationPos!!.latitude) < 0.0001 &&
+                    Math.abs(startPos.longitude - currentFakeLocationPos!!.longitude) < 0.0001
 
             // Show button only if start point not selected or different from fake GPS
             if (startPos == null || !isSameLocation) {
@@ -1240,7 +1241,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 // Check cache first
                 val cachedEntry = routeCache[cacheKey]
                 val isCacheValid = cachedEntry != null &&
-                    (System.currentTimeMillis() - cachedEntry.timestamp) < CACHE_EXPIRY_MS
+                        (System.currentTimeMillis() - cachedEntry.timestamp) < CACHE_EXPIRY_MS
 
                 val result = if (isCacheValid && cachedEntry != null) {
                     // Use cached route
@@ -1367,7 +1368,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         binding.routeLoadingCard.visibility = View.GONE
         binding.routeErrorCard.visibility = View.VISIBLE
         binding.routeErrorText.text = routeLoadError ?: getString(R.string.error_unknown)
-        
+
         // Reset button states based on current mode
         when (currentMode) {
             AppMode.ROUTE_PLAN -> {
@@ -1483,7 +1484,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // Hide action button and show navigation controls
         binding.actionButton.visibility = View.GONE
         binding.navigationControlsCard.visibility = View.VISIBLE
-        
+
         // Hide cancel route button during navigation
         binding.cancelRouteButton.visibility = View.GONE
 
@@ -1509,7 +1510,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         updateDistanceLabel()
 
         android.util.Log.d("MapActivity", "Navigation started with speed: $currentSpeed km/h, total distance: $totalRouteDistanceKm km")
-        
+
         // CRITICAL FIX: Start foreground service to prevent Android from killing app
         // This ensures navigation continues even when app is in background
         try {
@@ -1556,7 +1557,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             scope = navigationScope // FIXED: Use navigationScope to continue in background
         )
 
-       // showToast("🏍️ Bắt đầu di chuyển với tốc độ ${currentSpeed.toInt()} km/h")
+        // showToast("🏍️ Bắt đầu di chuyển với tốc độ ${currentSpeed.toInt()} km/h")
 
         routeSimulator?.start(
             onPosition = { position ->
@@ -1578,14 +1579,14 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     bearing = bearing,
                     speed = speedMs
                 )
-                
+
                 // CRITICAL FIX: Update navigation state even when background
                 // This ensures traveledDistanceKm and previousLocation are always updated
                 val currentTime = System.currentTimeMillis()
-                
+
                 // Update previousLocation for bearing calculation (always, even in background)
                 previousLocation = position
-                
+
                 // Update traveled distance (always, even in background)
                 // Use synchronized access to avoid race conditions
                 synchronized(this@MapActivity) {
@@ -1598,10 +1599,10 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     }
                     lastDistancePosition = position
                 }
-                
+
                 // Track current navigation position (always, even in background)
                 currentNavigationPosition = position
-                
+
                 // CRITICAL FIX: Update foreground service notification ALWAYS (even in background)
                 // This must run from background thread, not UI thread
                 try {
@@ -1614,26 +1615,26 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 } catch (e: Exception) {
                     android.util.Log.e("MapActivity", "Failed to update notification: ${e.message}", e)
                 }
-                
+
                 // Log GPS data (reduced frequency when background)
                 val timeDiff = if (lastGpsUpdateTime > 0) currentTime - lastGpsUpdateTime else 0
                 if (BuildConfig.DEBUG && (isActivityVisible || currentPositionIndex % 10 == 0)) {
                     android.util.Log.d("GPS_AntiDetect", "GPS: lat=${position.latitude}, lng=${position.longitude}, bearing=${bearing}°, interval=${timeDiff}ms, visible=$isActivityVisible")
                 }
                 lastGpsUpdateTime = currentTime
-                
+
                 // PERFORMANCE FIX: Only update UI if activity is visible
                 // Skip UI updates when app is in background to save CPU/GPU
                 if (!isActivityVisible) {
                     // All critical updates done above, just return to skip UI rendering
                     return@start
                 }
-                
+
                 // UI updates only when app is visible
                 runOnUiThread {
                     // Update distance label on UI
                     updateDistanceLabel()
-                    
+
                     // Update speed label to show control/actual speeds with curve reduction
                     try {
                         val actualSpeed = io.github.mwarevn.movingsimulation.utils.SpeedSyncManager.getActualSpeed()
@@ -1737,10 +1738,10 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         fakeLocationCenterDot?.remove()
         fakeLocationCenterDot = null
 
-    // Remove completed path
+        // Remove completed path
         completedPolyline?.remove()
         completedPolyline = null
-    completedPathPoints.clear()
+        completedPathPoints.clear()
 
         // Show search again and hide navigation controls
         binding.searchCard.visibility = View.VISIBLE
@@ -1784,7 +1785,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // Update replace button visibility whenever set button state changes
         updateReplaceLocationButtonVisibility()
     }
-    
+
     /**
      * Update speed label to show control speed and actual speed (after curve reduction)
      * Format: "108 / 86 km/h" (control / actual)
@@ -1814,10 +1815,10 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // 3. The marked position is different from current fake location
 
         val shouldShow = currentMode == AppMode.SEARCH &&
-                        isGpsSet &&
-                        destMarker?.position != null &&
-                        currentFakeLocationPos != null &&
-                        destMarker?.position != currentFakeLocationPos
+                isGpsSet &&
+                destMarker?.position != null &&
+                currentFakeLocationPos != null &&
+                destMarker?.position != currentFakeLocationPos
 
         binding.replaceLocationButton.visibility = if (shouldShow) View.VISIBLE else View.GONE
     }
@@ -1834,13 +1835,13 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
     private fun updateCompletedPath(currentPosition: LatLng) {
         val last = completedPathPoints.lastOrNull()
-        
+
         if (last == null) {
             // First point - just add it
             completedPathPoints.add(currentPosition)
         } else {
             val distance = distanceBetween(last, currentPosition)
-            
+
             // CRITICAL FIX: If distance is too large (> 50m), it means app was in background
             // Interpolate missing points from the original route to fill the gap
             if (distance > 50.0 && routePoints.isNotEmpty()) {
@@ -1869,7 +1870,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             completedPathPoints.size > 1 && completedPathPoints.size % 3 == 0 -> true  // Update every 3rd point
             else -> false
         }
-        
+
         if (shouldUpdate) {
             if (completedPolyline == null) {
                 completedPolyline = mMap.addPolyline(
@@ -1883,25 +1884,25 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             }
         }
     }
-    
+
     /**
      * Interpolate route segment between two points
      * Used to fill gaps when app was in background and missed route points
      */
     private fun interpolateRouteSegment(from: LatLng, to: LatLng, route: List<LatLng>): List<LatLng> {
         if (route.isEmpty()) return emptyList()
-        
+
         // Find the segment in route that contains 'from' and 'to'
         var fromIdx = -1
         var toIdx = -1
         var minFromDist = Double.MAX_VALUE
         var minToDist = Double.MAX_VALUE
-        
+
         // Find closest points in route to 'from' and 'to'
         for (i in route.indices) {
             val distFrom = distanceBetween(from, route[i])
             val distTo = distanceBetween(to, route[i])
-            
+
             if (distFrom < minFromDist) {
                 minFromDist = distFrom
                 fromIdx = i
@@ -1911,39 +1912,39 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 toIdx = i
             }
         }
-        
+
         // If we found valid indices and 'to' is after 'from' in the route
         if (fromIdx >= 0 && toIdx >= 0 && toIdx > fromIdx) {
             val interpolated = mutableListOf<LatLng>()
-            
+
             // Add all points between fromIdx and toIdx (inclusive)
             for (i in fromIdx..toIdx) {
                 interpolated.add(route[i])
             }
-            
+
             // If 'to' is not exactly at toIdx, add it at the end
             if (distanceBetween(to, route[toIdx]) > 5.0) {
                 interpolated.add(to)
             }
-            
+
             return interpolated
         }
-        
+
         // Fallback: If we can't find the segment, create a simple interpolation
         // This happens if route doesn't contain the exact points
         val interpolated = mutableListOf<LatLng>()
         val steps = (distanceBetween(from, to) / 10.0).toInt().coerceAtLeast(2).coerceAtMost(50) // Max 50 points
-        
+
         for (i in 0..steps) {
             val fraction = i.toDouble() / steps
             val lat = from.latitude + (to.latitude - from.latitude) * fraction
             val lng = from.longitude + (to.longitude - from.longitude) * fraction
             interpolated.add(LatLng(lat, lng))
         }
-        
+
         return interpolated
     }
-    
+
     /**
      * Force update completed route polyline (call when navigation stops/pauses)
      * This ensures the final route is drawn even if point count is not divisible by 3
@@ -1999,24 +2000,24 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
      */
     private fun isValidRoute(points: List<LatLng>): Boolean {
         if (points.isEmpty()) return false
-        
+
         // Check all coordinates are valid
         val allValid = points.all { point ->
-            point.latitude in -90.0..90.0 && 
+            point.latitude in -90.0..90.0 &&
             point.longitude in -180.0..180.0 &&
             !point.latitude.isNaN() && 
             !point.longitude.isNaN() &&
             !point.latitude.isInfinite() &&
             !point.longitude.isInfinite()
         }
-        
+
         if (!allValid) return false
-        
+
         // Check for duplicate points (within 1 meter tolerance)
         val distinctPoints = points.distinctBy { point ->
             "${point.latitude.toInt()},${point.longitude.toInt()}"
         }
-        
+
         // Allow some duplicates but not all points being the same
         return distinctPoints.size >= 2
     }
@@ -2248,11 +2249,11 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // CRITICAL: Proper cleanup to prevent memory leaks
         routeSimulator?.stop()
         routeSimulator = null
-        
+
         // CRITICAL FIX: Cancel navigationScope when Activity is destroyed
         // This ensures RouteSimulator stops and prevents memory leaks
         navigationScope.cancel()
-        
+
         searchJob?.cancel()
         searchJob = null
 
@@ -2300,14 +2301,14 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 completedPathPoints = ArrayList(completedPathPoints)
             )
             android.util.Log.d("MapActivity", "Saved navigation state to background")
-            
+
             // CRITICAL: Ensure RouteSimulator is NOT paused when app goes to background
             // Only pause if user explicitly clicks pause button
             if (routeSimulator != null) {
                 // Verify RouteSimulator is still running
                 val isRunning = routeSimulator?.isRunning() ?: false
                 android.util.Log.d("MapActivity", "RouteSimulator running state: $isRunning (should be true)")
-                
+
                 // Force resume if somehow paused (shouldn't happen, but safety check)
                 if (!isRunning && !isPaused) {
                     android.util.Log.w("MapActivity", "RouteSimulator was paused unexpectedly, resuming...")
@@ -2315,7 +2316,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 }
             }
         }
-        
+
         // Don't pause route simulator when going to background during navigation
         // Let it continue running for seamless background GPS simulation
         android.util.Log.d("MapActivity", "Navigation will continue in background (isDriving=$isDriving, isPaused=$isPaused)")
@@ -2327,21 +2328,21 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     private fun toggleNavigationControls() {
         val isCurrentlyExpanded = PrefManager.navControlsExpanded
         val newExpandedState = !isCurrentlyExpanded
-        
+
         // Save new state
         PrefManager.navControlsExpanded = newExpandedState
-        
+
         // Animate the transition
         animateNavigationControls(newExpandedState)
     }
-    
+
     /**
      * Animate navigation controls collapse/expand
      */
     private fun animateNavigationControls(expanded: Boolean) {
         val expandableContent = binding.navControlsExpandable
         val toggleButton = binding.navControlsToggle
-        
+
         if (expanded) {
             // Expand animation
             expandableContent.visibility = View.VISIBLE
@@ -2350,7 +2351,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                 .alpha(1f)
                 .setDuration(200)
                 .start()
-            
+
             // Rotate toggle button icon (point up when expanded)
             toggleButton.animate()
                 .rotation(0f)
@@ -2366,7 +2367,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
                     expandableContent.visibility = View.GONE
                 }
                 .start()
-            
+
             // Rotate toggle button icon (point down when collapsed)
             toggleButton.animate()
                 .rotation(180f)
@@ -2375,13 +2376,13 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             toggleButton.setImageResource(R.drawable.ic_expand_more)
         }
     }
-    
+
     /**
      * Restore navigation controls state from preferences
      */
     private fun restoreNavigationControlsState() {
         val isExpanded = PrefManager.navControlsExpanded
-        
+
         // Set initial state without animation
         if (isExpanded) {
             binding.navControlsExpandable.visibility = View.VISIBLE
@@ -2403,7 +2404,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        
+
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
@@ -2482,7 +2483,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         } else if (isDriving && !isPaused) {
             // Regular UI refresh for ongoing navigation
             updateNavigationUI()
-            
+
             // CRITICAL FIX: Force update completed path when resuming
             // This ensures route is drawn correctly after returning from background
             if (currentNavigationPosition != null) {
@@ -2537,6 +2538,30 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
     }
 
     // Marker Drag Listener implementations
+    override fun onMarkerDragStart(marker: Marker) {
+        // Allow dragging in both SEARCH and ROUTE_PLAN modes
+        if (currentMode == AppMode.NAVIGATION) {
+            showToast(getString(R.string.error_cannot_change_dest_moving))
+            return
+        }
+
+        // In SEARCH mode, only allow dragging destination marker
+        if (currentMode == AppMode.SEARCH && marker != destMarker) {
+            return
+        }
+
+        // Add vibration feedback when drag starts
+        val vibrator = getSystemService(android.content.Context.VIBRATOR_SERVICE) as Vibrator
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(100, 200))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(100)
+            }
+        }
+    }
+
     override fun onMarkerDrag(marker: Marker) {
         // Prevent dragging during navigation
         if (currentMode == AppMode.NAVIGATION) {
@@ -2570,36 +2595,9 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
             }
         }
 
-        // Update route only when drag ends to reduce server calls
-        // Only in ROUTE_PLAN mode
+        // Update route only when drag ends
         if (currentMode == AppMode.ROUTE_PLAN && startMarker != null && destMarker != null) {
             drawRoute()
-        }
-    }
-
-    override fun onMarkerDragStart(marker: Marker) {
-        // Allow dragging in both SEARCH and ROUTE_PLAN modes
-        if (currentMode == AppMode.NAVIGATION) {
-            showToast(getString(R.string.error_cannot_change_dest_moving))
-            return
-        }
-
-        // In SEARCH mode, only allow dragging destination marker
-        if (currentMode == AppMode.SEARCH && marker != destMarker) {
-            return
-        }
-
-        // Add vibration feedback when drag starts
-        val vibrator = getSystemService(android.content.Context.VIBRATOR_SERVICE) as Vibrator
-        if (vibrator.hasVibrator()) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                // Vibrate for 100ms with amplitude 200
-                vibrator.vibrate(VibrationEffect.createOneShot(100, 200))
-            } else {
-                // For older Android versions
-                @Suppress("DEPRECATION")
-                vibrator.vibrate(100)
-            }
         }
     }
 
@@ -2607,7 +2605,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // CRITICAL FIX: Force update completed path before clearing
         // This ensures the final route is drawn even if point count is not divisible by 3
         forceUpdateCompletedPath()
-        
+
         // Hide completion action bar
         binding.completionActionsCard.visibility = View.GONE
 
@@ -2621,7 +2619,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         routePolyline = null
         completedPolyline?.remove()
         completedPolyline = null
-    completedPathPoints.clear()
+        completedPathPoints.clear()
         currentPositionMarker?.remove()
         currentPositionMarker = null
         startMarker?.remove()
@@ -2660,8 +2658,8 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         // Reset navigation state to allow restart
         isDriving = false
         isPaused = false
-    currentPositionIndex = 0
-    completedPathPoints.clear()
+        currentPositionIndex = 0
+        completedPathPoints.clear()
 
         // Clear old circle and center dot before restarting
         fakeLocationCircle?.remove()
@@ -2738,7 +2736,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
 
                         // Update traveled distance
                         updateTraveledDistance(position)
-                        
+
                         // Update speed label to show control/actual speeds with curve reduction
                         try {
                             val actualSpeed = io.github.mwarevn.movingsimulation.utils.SpeedSyncManager.getActualSpeed()
@@ -2814,7 +2812,7 @@ class MapActivity : BaseMapActivity(), OnMapReadyCallback, GoogleMap.OnMapClickL
         routePolyline = null
         completedPolyline?.remove()
         completedPolyline = null
-    completedPathPoints.clear()
+        completedPathPoints.clear()
         currentPositionMarker?.remove()
         currentPositionMarker = null
         startMarker?.remove()
