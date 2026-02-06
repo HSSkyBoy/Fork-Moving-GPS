@@ -37,6 +37,7 @@ import com.google.android.gms.location.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mwarevn.movingsimulation.BuildConfig
 import io.github.mwarevn.movingsimulation.R
@@ -95,7 +96,6 @@ abstract class BaseMapActivity: AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // 修正：初始化 binding 並設置 contentView
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
