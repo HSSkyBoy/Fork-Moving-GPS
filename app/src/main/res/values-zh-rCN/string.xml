@@ -18,14 +18,14 @@
 
     <!-- About -->
     <string name="about">关于</string>
-    <string name="about_info">开发人员：\n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\n基于 Xposed 框架开发的虚拟定位工具。</string>
+    <string name="about_info">开发者：\n@mwarevn (2024-2026) \n@hsskyboy (2025-2026) \n@Android1500 (2022-2023) \n\n基于 Xposed 框架开发的虚拟定位工具。</string>
 
     <!-- Dialog -->
-    <string name="error_xposed_module_missing">Xposed 模块未激活</string>
-    <string name="error_xposed_module_missing_desc">请在 LSPosed 管理员中激活此模块并重启设备</string>
-    <string name="add_fav_dialog_title">加入我的最爱</string>
+    <string name="error_xposed_module_missing">Xposed模块 未激活</string>
+    <string name="error_xposed_module_missing_desc">请在 LSPosed 管理员中激活此模块并重新启动设备</string>
+    <string name="add_fav_dialog_title">添加至我的最爱</string>
     <string name="dialog_button_add">添加</string>
-    <string name="location_not_select">尚未选择地点</string>
+    <string name="location_not_select">位置未选择</string>
     <string name="save">保存</string>
 
     <!-- SettingActivity -->
@@ -36,18 +36,62 @@
     <string name="enter_valid_input">请输入有效数字</string>
     <string name="delete_favorite_item">删除我的最爱</string>
     <string name="title_activity_settings">设置</string>
-    <string name="check_update">检查更新</string>
-    <string name="check_update_summary">自动从 GitHub 检查最新版本</string>
     <string name="enable_joystick">使用摇杆</string>
-    <string name="enable_joystick_summary">使用摇杆控制位置(实验性功能)</string>
+    <string name="enable_joystick_summary">使用摇杆控制位置 (实验性功能 )</string>
     <string name="advanced_hook">Hook 系统定位</string>
-    <string name="advanced_summary">Hook 系统以获得更好的位置设置效果(需要重新启动)</string>
+    <string name="advanced_summary">Hook 系统以获得更好的位置设置效果 (需要重新启动 )</string>
     <string name="random_position">随机位置</string>
     <string name="random_position_summary">在设置的位置周围使用随机位置</string>
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
     <string name="app_update_failed">更新失败</string>
     <string name="dark_theme">深色主题</string>
+
+    <!-- 活动 -->
+    <string name="title_anti_detection">高端伪装</string>
+    <string name="header_advanced_features">🚀 高端功能</string>
+    <string name="desc_advanced_features">激活高端功能以最大化 GPS 伪装真实度并绕过复杂侦测。\n\n 点击每个开关查看详细信息。\n\n 变更需要重新启动目标应用程序。</string>
+    <string name="label_sensor_spoof">Sensor Spoofing</string>
+    <string name="summary_sensor_spoof">同步加速度计、陀螺仪、磁力计与 GPS</string>
+    <string name="desc_sensor_spoof">🚀 高端功能\n\n 同步设备传感器（加速度计、陀螺仪、磁力计）与 GPS 移动。\n\n✅ 好处:\n• 让移动感觉对应用程序更真实\n• 绕过机器学习侦测传感器不一致\n• 使用卡尔曼滤波器以获得平滑运动\n\n⚠️ 注意事项:\n• 可能影响依赖真实传感器的应用程序\n• 稍微增加 CPU 使用率\n\n 推荐给: 高端侦测绕过</string>
+    <string name="label_network_simulation">网络模拟</string>
+    <string name="summary_network_simulation">伪装基地台与 WiFi 数据符合 GPS 位置</string>
+    <string name="desc_network_simulation">🚀 高端功能\n\n 仿真基地台与 WiFi 数据，以符合您的伪装 GPS 位置。\n\n✅ 优点:\n• 应用程序无法通过网络侦测位置不匹配\n• 产生真实的 WiFi 接入点名称与信号强度\n• 伪装基地台 ID 与位置区码\n\n 推荐给: 通过网络三角测量验证位置的应用程序</string>
+    <string name="label_advanced_randomization">高端随机化</string>
+    <string name="summary_advanced_randomization">增加真实变化以抵抗机器学习侦测</string>
+    <string name="desc_advanced_randomization">🚀 优先功能\n\n 为 GPS 数据、时间及移动模式增加真实变化。\n\n✅ 好处:\n• 抵抗设备指纹扫描\n• 打败分析移动模式的机器学习模型\n• 使用布朗运动进行自然位置抖动\n• 平滑的加减速度斜坡\n\n 推荐给: 最大程度对抗先进侦测</string>
+    <string name="msg_feature_updated_restart">功能更新 - 重启目标应用程序以套用</string>
+    <string name="btn_reset_to_default">重设为默认值 (全部停用)</string>
+    <string name="dialog_reset_title">重设为默认值</string>
+    <string name="dialog_reset_message">这将停用所有高端功能（安全值）。\n\n❌ 所有功能将被停用：\n• 传感器仿真\n• 网络仿真\n• 高级随机化\n\n 要继续吗？</string>
+
+    <string name="hint_start_point">起点</string>
+    <string name="hint_destination">目的地</string>
+    <string name="label_use_current_as_start">使用目前位置作为起点</string>
+    <string name="label_auto_speed">自动速度</string>
+    <string name="desc_go_to_fake_location">前往仿真位置</string>
+    <string name="desc_replace_fake_location">替换仿真位置</string>
+    <string name="desc_toggle_camera_follow">开关镜头跟随</string>
+    <string name="marker_label_destination">目的地</string>
+    <string name="marker_label_start">起点</string>
+
+    <string name="btn_get_directions">取得路线</string>
+    <string name="btn_start_movement">开始</string>
+    <string name="btn_pause">暂停</string>
+    <string name="btn_resume">继续</string>
+    <string name="btn_stop">停止</string>
+    <string name="btn_restart">重新启动</string>
+    <string name="btn_finish">完成</string>
+    <string name="btn_cancel">取消</string>
+    <string name="status_loading_addresses">加载中...</string>
+    <string name="status_finding_route">寻找路线中...</string>
+
+    <string name="check_update">检查更新</string>
+    <string name="check_update_summary">自动从 GitHub 检查最新版本</string>
+    <string name="download_manager_description">下载更新</string>
+    <string name="bs_update_download_failed">失败</string>
+    <string name="update_button">更新</string>
+    <string name="update_available">更新可用</string>
 
     <!-- Error -->
     <string name="error_location_unavailable_using_default">无法取得当前位置，将使用默认位置。</string>
@@ -59,14 +103,13 @@
     <string name="msg_fake_gps_replaced">虚拟 GPS 位置已取代。</string>
     <string name="use_current_location_fmt">使用当前位置 (%1$s, %2$s)</string>
     <string name="msg_swapped_locations">起点与目的地已对调。</string>
-    <string name="status_finding_route">正在寻找路线...</string>
     <string name="error_route_not_found">找不到路线，请再试一次。</string>
     <string name="error_timeout">要求逾时。请检查您的网络连接并再试一次。</string>
     <string name="error_api_key_invalid">无效的 API 密钥，请检查设置。</string>
     <string name="error_api_limit_exceeded">已超过 API 使用限制，请稍后再试。</string>
     <string name="error_server">服务器错误，请稍后再试。</string>
     <string name="error_connection_code">连接错误 (%1$d)，请再试一次。</string>
-    <string name="error_no_network">无网络连接，请检查 WiFi 或行动数据。</string>
+    <string name="error_no_network">无网络连接，请检查 WiFi 或移动数据。</string>
     <string name="error_connection_slow">连接速度过慢，请检查网络并再试一次。</string>
     <string name="error_unknown_cause">未知错误：%1$s</string>
     <string name="error_no_route_data">没有可用的路线数据。</string>

@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MapBox API Key (Tùy chọn)"
+        android:text="MapBox API Key (Optional)"
         android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginBottom="8dp" />
@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Để trống = OSRM miễn phí\nCó key = MapBox chính xác hơn (100k free/tháng)"
+        android:text="Leave blank = Free OSRM\nWith key = More accurate MapBox (100k free/month)"
         android:textSize="12sp"
         android:textColor="#666666"
         android:layout_marginBottom="8dp" />
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hướng dẫn lấy key:"
+        android:text="How to get a key:"
         android:textStyle="bold"
         android:textSize="12sp"
         android:layout_marginBottom="4dp" />
@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1. Truy cập https://account.mapbox.com\n2. Đăng ký tài khoản (miễn phí)\n3. Tạo Access Token\n4. Copy và paste vào đây"
+        android:text="1. Visit https://account.mapbox.com\n2. Sign up for an account (free)\n3. Create an Access Token\n4. Copy and paste it here"
         android:textSize="11sp"
         android:textColor="#666666"
         android:layout_marginBottom="24dp" />
@@ -50,7 +50,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loại phương tiện"
+        android:text="Vehicle Type"
         android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginBottom="8dp" />

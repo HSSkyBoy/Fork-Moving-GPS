@@ -12,7 +12,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Advanced Anti-Detection"
+            app:title="@string/title_anti_detection"
             app:navigationIcon="?attr/homeAsUpIndicator" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="🚀 Advanced Features"
+                        android:text="@string/header_advanced_features"
                         android:textColor="#1565C0"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -54,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Enable advanced features to maximize GPS spoofing realism and bypass sophisticated detection.\n\nTap each switch to see detailed information.\n\nChanges require restarting the target app."
+                        android:text="@string/desc_advanced_features"
                         android:textColor="#424242"
                         android:textSize="14sp" />
 
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Advanced Anti-Detection Features"
+                android:text="@string/title_anti_detection"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -89,7 +89,7 @@
                         android:id="@+id/switchSensorSpoof"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sensor Spoofing"
+                        android:text="@string/label_sensor_spoof"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="12dp"
-                        android:text="Synchronize accelerometer, gyroscope, magnetometer with GPS"
+                        android:text="@string/summary_sensor_spoof"
                         android:textSize="12sp"
                         android:alpha="0.7" />
 
@@ -106,7 +106,7 @@
                         android:id="@+id/switchNetworkSimulation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Network Simulation"
+                        android:text="@string/label_network_simulation"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="12dp"
-                        android:text="Fake cell tower and WiFi data matching GPS location"
+                        android:text="@string/summary_network_simulation"
                         android:textSize="12sp"
                         android:alpha="0.7" />
 
@@ -123,7 +123,7 @@
                         android:id="@+id/switchAdvancedRandomization"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Advanced Randomization"
+                        android:text="@string/label_advanced_randomization"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -131,7 +131,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Add realistic variations to resist ML detection"
+                        android:text="@string/summary_advanced_randomization"
                         android:textSize="12sp"
                         android:alpha="0.7" />
 
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:text="Reset to Default (All Disabled)"
+                android:text="@string/btn_reset_to_default"
                 android:textAllCaps="false"
                 app:icon="@android:drawable/ic_menu_revert"
                 app:iconGravity="start" />

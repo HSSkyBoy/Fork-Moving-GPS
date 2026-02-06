@@ -60,7 +60,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Điểm bắt đầu"
+                        android:hint="@string/hint_start_point"
                         android:background="@android:color/transparent"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
@@ -91,7 +91,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Điểm đến"
+                        android:hint="@string/hint_destination"
                         android:background="@android:color/transparent"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
@@ -126,7 +126,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Dùng vị trí hiện tại làm điểm bắt đầu"
+                        android:text="@string/label_use_current_as_start"
                         android:textSize="14sp"
                         android:textColor="?attr/colorPrimary" />
 
@@ -173,7 +173,7 @@
                     android:layout_height="32dp"
                     android:src="@drawable/ic_swap_vert"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Đảo ngược điểm đầu và điểm cuối"
+                    android:contentDescription="@string/msg_swapped_locations"
                     android:padding="4dp"
                     app:tint="?attr/colorPrimary" />
 
@@ -248,7 +248,7 @@
                         android:layout_height="28dp"
                         android:src="@drawable/ic_expand_less"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:contentDescription="Thu nhỏ/Mở rộng"
+                        android:contentDescription="@string/drawer_close"
                         android:padding="4dp"
                         app:tint="?attr/colorOnSurface"/>
 
@@ -275,7 +275,7 @@
                             android:id="@+id/nav_from_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="• Đang tải..."
+                            android:text="@string/status_loading_addresses"
                             android:textSize="11sp"
                             android:textColor="?attr/colorOnSurfaceVariant"
                             android:maxLines="1"
@@ -286,7 +286,7 @@
                             android:id="@+id/nav_to_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="• Đang tải..."
+                            android:text="@string/status_loading_addresses"
                             android:textSize="11sp"
                             android:textColor="?attr/colorOnSurfaceVariant"
                             android:maxLines="1"
@@ -310,7 +310,7 @@
                                 android:id="@+id/auto_curve_speed_checkbox"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Auto speed"
+                                android:text="@string/label_auto_speed"
                                 android:checked="true"/>
 
 <!--                        <TextView-->
@@ -352,7 +352,7 @@
                             android:layout_height="48dp"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
-                            android:text="Tạm dừng"
+                            android:text="@string/btn_pause"
                             android:textSize="13sp"
                             android:minHeight="48dp"
                             android:paddingStart="12dp"
@@ -369,7 +369,7 @@
                             android:layout_height="48dp"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
-                            android:text="Tiếp tục"
+                            android:text="@string/btn_resume"
                             android:textSize="13sp"
                             android:minHeight="48dp"
                             android:paddingStart="12dp"
@@ -386,7 +386,7 @@
                             android:layout_width="0dp"
                             android:layout_height="48dp"
                             android:layout_weight="1"
-                            android:text="Dừng"
+                            android:text="@string/btn_stop"
                             android:textSize="13sp"
                             android:minHeight="48dp"
                             android:paddingStart="12dp"
@@ -436,7 +436,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:text="Bắt đầu lại"
+                    android:text="@string/btn_restart"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     app:icon="@drawable/ic_restart"
@@ -450,7 +450,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="Hoàn tất"
+                    android:text="@string/btn_finish"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     app:icon="@drawable/ic_check_circle"
@@ -491,7 +491,7 @@
                     android:id="@+id/route_loading_progress_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đang tìm tuyến đường..."
+                    android:text="@string/status_finding_route"
                     android:textSize="16sp"
                     android:gravity="center" />
 
@@ -523,7 +523,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lỗi tìm tuyến đường"
+                    android:text="@string/error_route_not_found"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#C62828"
@@ -548,7 +548,7 @@
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Huỷ"
+                        android:text="@string/btn_cancel"
                         android:layout_marginEnd="8dp" />
 
                     <com.google.android.material.button.MaterialButton
@@ -556,7 +556,7 @@
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thử lại" />
+                        android:text="@string/update_button" />
 
                 </LinearLayout>
 
@@ -582,7 +582,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Chỉ đường"
+                android:text="@string/btn_get_directions"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:paddingTop="18dp"
@@ -599,7 +599,7 @@
                 style="@style/Widget.Material3.Button.TonalButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Huỷ"
+                android:text="@string/btn_cancel"
                 android:textColor="?attr/colorOnErrorContainer"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -640,7 +640,7 @@
             android:id="@+id/getFakeLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Tới vị trí fake location"
+            android:contentDescription="@string/desc_go_to_fake_location"
             android:layout_alignParentEnd="true"
             android:layout_above="@id/getlocation"
             android:layout_marginEnd="16dp"
@@ -658,7 +658,7 @@
             android:id="@+id/replaceLocationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Thay thế fake location"
+            android:contentDescription="@string/desc_replace_fake_location"
             android:layout_alignParentEnd="true"
             android:layout_above="@id/getFakeLocation"
             android:layout_marginEnd="16dp"
@@ -697,7 +697,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:visibility="gone"
-            android:contentDescription="Bật/tắt theo dõi camera"
+            android:contentDescription="@string/desc_toggle_camera_follow"
             app:fabSize="mini"
             app:fabCustomSize="36dp"
             app:srcCompat="@drawable/ic_camera_follow"

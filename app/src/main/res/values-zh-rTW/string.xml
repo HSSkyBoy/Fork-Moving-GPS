@@ -18,14 +18,14 @@
 
     <!-- About -->
     <string name="about">關於</string>
-    <string name="about_info">開發人員：\n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\n基於 Xposed 框架開發的虛擬定位工具。</string>
+    <string name="about_info">開發者：\n@mwarevn (2024-2026) \n@hsskyboy (2025-2026) \n@Android1500 (2022-2023) \n\n基於 Xposed 框架開發的虛擬定位工具。</string>
 
     <!-- Dialog -->
-    <string name="error_xposed_module_missing">Xposed 模組未啟用</string>
-    <string name="error_xposed_module_missing_desc">請在 LSPosed 管理員中啟用此模組並重啟裝置</string>
-    <string name="add_fav_dialog_title">加入我的最愛</string>
-    <string name="dialog_button_add">新增</string>
-    <string name="location_not_select">尚未選擇地點</string>
+    <string name="error_xposed_module_missing">Xposed模組 未啟用</string>
+    <string name="error_xposed_module_missing_desc">請在 LSPosed 管理員中啟用此模組並重新啟動裝置</string>
+    <string name="add_fav_dialog_title">添加至我的最愛</string>
+    <string name="dialog_button_add">添加</string>
+    <string name="location_not_select">位置未選擇</string>
     <string name="save">儲存</string>
 
     <!-- SettingActivity -->
@@ -36,8 +36,6 @@
     <string name="enter_valid_input">請輸入有效數字</string>
     <string name="delete_favorite_item">刪除我的最愛</string>
     <string name="title_activity_settings">設定</string>
-    <string name="check_update">檢查更新</string>
-    <string name="check_update_summary">自動從 GitHub 檢查最新版本</string>
     <string name="enable_joystick">使用搖桿</string>
     <string name="enable_joystick_summary">使用搖桿控制位置 (實驗性功能 )</string>
     <string name="advanced_hook">Hook 系統定位</string>
@@ -49,6 +47,52 @@
     <string name="app_update_failed">更新失敗</string>
     <string name="dark_theme">深色主題</string>
 
+    <!-- 活動 -->
+    <string name="title_anti_detection">進階偽裝</string>
+    <string name="header_advanced_features">🚀 高階功能</string>
+    <string name="desc_advanced_features">啟用高階功能以最大化 GPS 偽裝真實度並繞過複雜偵測。\n\n 點擊每個開關查看詳細資訊。\n\n 變更需要重新啟動目標應用程式。</string>
+    <string name="label_sensor_spoof">Sensor Spoofing</string>
+    <string name="summary_sensor_spoof">同步加速度計、陀螺儀、磁力計與 GPS</string>
+    <string name="desc_sensor_spoof">🚀 高階功能\n\n 同步裝置感測器（加速度計、陀螺儀、磁力計）與 GPS 移動。\n\n✅ 好處:\n• 讓移動感覺對應用程式更真實\n• 繞過機器學習偵測感測器不一致\n• 使用卡爾曼濾波器以獲得平滑運動\n\n⚠️ 注意事項:\n• 可能影響依賴真實感測器的應用程式\n• 稍微增加 CPU 使用率\n\n 推薦給: 高階偵測繞過</string>
+    <string name="label_network_simulation">網絡模擬</string>
+    <string name="summary_network_simulation">偽裝基地台與 WiFi 資料符合 GPS 位置</string>
+    <string name="desc_network_simulation">🚀 高階功能\n\n 模擬基地台與 WiFi 資料，以符合您的偽裝 GPS 位置。\n\n✅ 優點:\n• 應用程式無法透過網路偵測位置不匹配\n• 產生真實的 WiFi 接入點名稱與信號強度\n• 偽裝基地台 ID 與位置區碼\n\n 推薦給: 透過網路三角測量驗證位置的應用程式</string>
+    <string name="label_advanced_randomization">高階隨機化</string>
+    <string name="summary_advanced_randomization">增加真實變化以抵抗機器學習偵測</string>
+    <string name="desc_advanced_randomization">🚀 優先功能\n\n 為 GPS 資料、時間及移動模式增加真實變化。\n\n✅ 好處:\n• 抵抗裝置指紋掃描\n• 打敗分析移動模式的機器學習模型\n• 使用布朗運動進行自然位置抖動\n• 平滑的加減速度斜坡\n\n 推薦給: 最大程度對抗先進偵測</string>
+    <string name="msg_feature_updated_restart">功能更新 - 重啟目標應用程式以套用</string>
+    <string name="btn_reset_to_default">重設為預設值 (全部停用)</string>
+    <string name="dialog_reset_title">重設為預設值</string>
+    <string name="dialog_reset_message">這將停用所有進階功能（安全值）。\n\n❌ 所有功能將被停用：\n• 传感器模擬\n• 網路模擬\n• 高級隨機化\n\n 要繼續嗎？</string>
+
+    <string name="hint_start_point">起點</string>
+    <string name="hint_destination">目的地</string>
+    <string name="label_use_current_as_start">使用目前位置作為起點</string>
+    <string name="label_auto_speed">自動速度</string>
+    <string name="desc_go_to_fake_location">前往模擬位置</string>
+    <string name="desc_replace_fake_location">替換模擬位置</string>
+    <string name="desc_toggle_camera_follow">開關鏡頭跟隨</string>
+    <string name="marker_label_destination">目的地</string>
+    <string name="marker_label_start">起點</string>
+
+    <string name="btn_get_directions">取得路線</string>
+    <string name="btn_start_movement">開始</string>
+    <string name="btn_pause">暫停</string>
+    <string name="btn_resume">繼續</string>
+    <string name="btn_stop">停止</string>
+    <string name="btn_restart">重新啟動</string>
+    <string name="btn_finish">完成</string>
+    <string name="btn_cancel">取消</string>
+    <string name="status_loading_addresses">載入中...</string>
+    <string name="status_finding_route">尋找路線中...</string>
+
+    <string name="check_update">檢查更新</string>
+    <string name="check_update_summary">自動從 GitHub 檢查最新版本</string>
+    <string name="download_manager_description">下載更新</string>
+    <string name="bs_update_download_failed">失敗</string>
+    <string name="update_button">更新</string>
+    <string name="update_available">更新可用</string>
+
     <!-- Error -->
     <string name="error_location_unavailable_using_default">無法取得當前位置，將使用預設位置。</string>
     <string name="error_location_fetch">位置錯誤：%1$s</string>
@@ -59,7 +103,6 @@
     <string name="msg_fake_gps_replaced">虛擬 GPS 位置已取代。</string>
     <string name="use_current_location_fmt">使用當前位置 (%1$s, %2$s)</string>
     <string name="msg_swapped_locations">起點與目的地已對調。</string>
-    <string name="status_finding_route">正在尋找路線...</string>
     <string name="error_route_not_found">找不到路線，請再試一次。</string>
     <string name="error_timeout">要求逾時。請檢查您的網路連線並再試一次。</string>
     <string name="error_api_key_invalid">無效的 API 金鑰，請檢查設定。</string>

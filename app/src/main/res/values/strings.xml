@@ -17,10 +17,10 @@
     <string name="addfavorite_desc">Add to favorites</string>
 
     <!-- About -->
-        <string name="about">About</string>
-        <string name="about_info">Developers: \n@mwarevn (2024-2026) \n@Android1500 (2022-2023) \n\nA virtual location tool developed based on the Xposed framework.</string>
+    <string name="about">About</string>
+    <string name="about_info">Developers: \n@mwarevn (2024-2026) \n@hsskyboy (2025-2026) \n@Android1500 (2022-2023) \n\nA virtual location tool developed based on the Xposed framework.</string>
 
-        <!-- Dialog -->
+    <!-- Dialog -->
     <string name="error_xposed_module_missing">Xposed module not enabled</string>
     <string name="error_xposed_module_missing_desc">Please enable this module in LSPosed admin and restart the device</string>
     <string name="add_fav_dialog_title">Add to My Favorites</string>
@@ -47,7 +47,45 @@
     <string name="app_update_failed">Update failed</string>
     <string name="dark_theme">Dark theme</string>
 
-    <!-- Update -->
+    <!-- Activity -->
+    <string name="title_anti_detection">Advanced Anti-Detection</string>
+    <string name="header_advanced_features">🚀 Advanced Features</string>
+    <string name="desc_advanced_features">Enable advanced features to maximise GPS spoofing realism and bypass sophisticated detection.\n\nTap each switch to see detailed information.\n\nChanges require restarting the target app.</string>
+    <string name="label_sensor_spoof">Sensor Spoofing</string>
+    <string name="summary_sensor_spoof">Synchronise accelerometer, gyroscope, magnetometer with GPS</string>
+    <string name="desc_sensor_spoof">🚀 ADVANCED FEATURE\n\nSynchronises device sensors (accelerometer, gyroscope, magnetometer) with GPS movement.\n\n✅ Benefits:\n• Makes movement feel realistic to apps\n• Bypasses ML detection of sensor inconsistencies\n• Uses Kalman filtering for smooth motion\n\n⚠️ Note:\n• May affect apps that depend on real sensors\n• Slightly increases CPU usage\n\nRecommended for: Advanced detection bypass</string>
+    <string name="label_network_simulation">Network Simulation</string>
+    <string name="summary_network_simulation">Fake cell tower and WiFi data matching GPS location</string>
+    <string name="desc_network_simulation">🚀 ADVANCED FEATURE\n\nSimulates cell tower and WiFi data to match your fake GPS location.\n\n✅ Benefits:\n• Apps cannot detect location mismatch via network\n• Generates realistic WiFi AP names and signal strength\n• Fakes cell tower ID and location area code\n\nRecommended for: Apps that verify location via network triangulation</string>
+    <string name="label_advanced_randomization">Advanced Randomization</string>
+    <string name="summary_advanced_randomization">Add realistic variations to resist ML detection</string>
+    <string name="desc_advanced_randomization">🚀 ADVANCED FEATURE\n\nAdds realistic variations to GPS data, timing, and movement patterns.\n\n✅ Benefits:\n• Resists device fingerprinting\n• Defeats ML models analysing movement patterns\n• Uses Brownian motion for natural position jitter\n• Smooth acceleration/deceleration ramps\n\nRecommended for: Maximum stealth against advanced detection</string>
+    <string name="msg_feature_updated_restart">Feature updated - Restart target app to apply</string>
+    <string name="btn_reset_to_default">Reset to Default (All Disabled)</string>
+    <string name="dialog_reset_title">Reset to Default</string>
+    <string name="dialog_reset_message">This will disable all advanced features (safe default).\n\n❌ All features will be DISABLED:\n• Sensor Spoofing\n• Network Simulation\n• Advanced Randomization\n\nContinue?</string>
+
+    <string name="hint_start_point">Starting point</string>
+    <string name="hint_destination">Destination</string>
+    <string name="label_use_current_as_start">Use current location as start point</string>
+    <string name="label_auto_speed">Auto speed</string>
+    <string name="desc_go_to_fake_location">Go to mock location</string>
+    <string name="desc_replace_fake_location">Replace mock location</string>
+    <string name="desc_toggle_camera_follow">Toggle camera follow</string>
+    <string name="marker_label_destination">Destination</string>
+    <string name="marker_label_start">Start Point</string>
+
+    <string name="btn_get_directions">Get Directions</string>
+    <string name="btn_start_movement">Start</string>
+    <string name="btn_pause">Pause</string>
+    <string name="btn_resume">Resume</string>
+    <string name="btn_stop">Stop</string>
+    <string name="btn_restart">Restart</string>
+    <string name="btn_finish">Finish</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="status_loading_addresses">Loading...</string>
+    <string name="status_finding_route">Finding route...</string>
+
     <string name="check_update">Check for updates</string>
     <string name="check_update_summary">Automatically check the latest version from GitHub</string>
     <string name="download_manager_description">Downloading update</string>
@@ -58,14 +96,13 @@
     <!-- Error -->
     <string name="error_location_unavailable_using_default">Unable to obtain current location, will use default location.</string>
     <string name="error_location_fetch">Location error: %1$s</string>
-    <string name="instruction_select_dest_first">Please select the destination first, then click "Plan route".</string>
+    <string name="instruction_select_dest_first">Please select the destination first, then click \"Plan route\".</string>
     <string name="error_cannot_change_dest_moving">Destination cannot be changed while moving.</string>
     <string name="error_select_start_on_map">Please select the starting point on the map.</string>
     <string name="error_select_start_and_dest">Please select the starting point and destination.</string>
     <string name="msg_fake_gps_replaced">Mock GPS location has been replaced.</string>
     <string name="use_current_location_fmt">Using current location (%1$s, %2$s)</string>
     <string name="msg_swapped_locations">Starting point and destination have been swapped.</string>
-    <string name="status_finding_route">Finding route...</string>
     <string name="error_route_not_found">Route not found, please try again.</string>
     <string name="error_timeout">Request timed out. Please check your internet connection and try again.</string>
     <string name="error_api_key_invalid">Invalid API key, please check the settings.</string>
