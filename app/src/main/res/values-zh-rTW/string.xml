@@ -38,8 +38,10 @@
     <string name="title_activity_settings">設定</string>
     <string name="enable_joystick">使用搖桿</string>
     <string name="enable_joystick_summary">使用搖桿控制位置 (實驗性功能 )</string>
+    <string name="advanced_adh">防檢測 Hook</string>
+    <string name="advanced_adh_summary">設定要啟用哪些 Hook 以繞過偵測</string>
     <string name="advanced_hook">Hook 系統定位</string>
-    <string name="advanced_summary">Hook 系統以獲得更好的位置設定效果 (需要重新啟動 )</string>
+    <string name="advanced_hook_summary">Hook 系統以獲得更好的位置設定效果 (需要重新啟動 )</string>
     <string name="random_position">隨機位置</string>
     <string name="random_position_summary">在設定的位置周圍使用隨機位置</string>
     <string name="drawer_open">開啟</string>

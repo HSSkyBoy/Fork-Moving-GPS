@@ -38,8 +38,10 @@
     <string name="title_activity_settings">Settings</string>
     <string name="enable_joystick">Use joystick</string>
     <string name="enable_joystick_summary">Control your location with a joystick (experimental)</string>
+    <string name="advanced_adh">Anti-detection Hook</string>
+    <string name="advanced_adh_summary">Configure which hooks to enable for bypassing detection</string>
     <string name="advanced_hook">Hook system location</string>
-    <string name="advanced_summary">Hook system for better location setting (reboot required)</string>
+    <string name="advanced_hook_summary">Hook system for better location setting (reboot required)</string>
     <string name="random_position">Random location</string>
     <string name="random_position_summary">Use a random location around the set location</string>
     <string name="drawer_open">Open</string>

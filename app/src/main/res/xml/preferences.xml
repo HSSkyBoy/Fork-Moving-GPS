@@ -43,14 +43,14 @@
     <PreferenceCategory app:title="@string/xposed">
 
         <Preference
-            android:title="Anti-Detection Hooks"
-            android:summary="Configure which hooks to enable for bypassing detection"
+            android:title="@string/advanced_adh"
+            android:summary="@string/advanced_adh_summary"
             android:icon="@drawable/ic_advanced_hook"
             android:key="anti_detection_settings" />
 
         <SwitchPreferenceCompat
             android:title="@string/advanced_hook"
-            android:summary="@string/advanced_summary"
+            android:summary="@string/advanced_hook_summary"
             android:key="system_hooked"
             android:icon="@drawable/ic_advanced_hook"
             android:widgetLayout="@layout/preference_switch_widget"
