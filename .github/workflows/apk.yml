@@ -45,11 +45,14 @@ jobs:
           touch secrets.defaults.properties
           touch local.properties
 
-      # 3. 執行構建 (修改這裡：只構建 Full Release)
+      - name: Hotfix source code errors
+        run: |
+          sed -i 's/^\s*\*\/\s*$//g' app/build.gradle
+
       - name: Build with Gradle
         run: ./gradlew assembleFullRelease --stacktrace
 
-      # 4. 上傳構建產物
+      # 上傳構建產物
       - name: Upload APK Artifacts
         uses: actions/upload-artifact@v4
         with:
