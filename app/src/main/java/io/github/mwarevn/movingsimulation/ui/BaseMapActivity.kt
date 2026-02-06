@@ -433,15 +433,15 @@ abstract class BaseMapActivity: AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        val mLocationRequest = LocationRequest()
-        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        mLocationRequest.interval = 0
-        mLocationRequest.fastestInterval = 0
-        mLocationRequest.numUpdates = 1
+        val mLocationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 0)
+            .setMinUpdateIntervalMillis(0)
+            .setMaxUpdates(1)
+            .build()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         fusedLocationClient.requestLocationUpdates(
-            mLocationRequest, mLocationCallback,
+            mLocationRequest,
+            mLocationCallback,
             Looper.myLooper()
         )
     }
