@@ -15,7 +15,7 @@ import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import io.github.mwarevn.movingsimulation.BuildConfig
-import io.github.mwarevn.movingsimulation.utils.SpeedSyncManager
+import io.github.mwarevn.movingsimulation.utils.PrefManager
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import timber.log.Timber
 import java.util.*

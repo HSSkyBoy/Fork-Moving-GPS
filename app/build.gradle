@@ -64,7 +64,7 @@ android {
         }
     }
 
-    namespace 'io.github.hsskyboy.forkmovinggps'
+    namespace 'io.github.mwarevn.movingsimulation'
 }
 
 secrets {
